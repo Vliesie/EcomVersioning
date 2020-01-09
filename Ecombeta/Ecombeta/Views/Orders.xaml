@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Ecombeta.Views.Orders"
+             Title="Products"
+             x:Name="Pageback"
+           
+          >
+
+    <ContentPage.Content>
+        <FlexLayout
+            Direction="Column"
+                AlignItems="Center"
+                JustifyContent="SpaceEvenly">
+            <ListView x:Name="variablelistview"
+                    HasUnevenRows="True"
+                                      SeparatorVisibility="Default"
+                                      SeparatorColor="Black"
+                                      AbsoluteLayout.LayoutFlags="PositionProportional"
+                      VerticalOptions="FillAndExpand"
+                      HorizontalOptions="FillAndExpand">
+                <!-- HasUnevenRows="True"  -->
+                <!-- SeparatorVisibility="None"  -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Frame HasShadow="True" Margin="8">
+                                    <StackLayout
+                                         VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+                                        <Grid>
+                                            <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                            HeightRequest="200"
+                                            WidthRequest="200"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding images[0].src}">
+                                            </ffimageloading:CachedImage>
+                                            <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                            HeightRequest="200"
+                                            WidthRequest="200"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding image.src}" >
+                                            </ffimageloading:CachedImage>
+                                        </Grid>
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black" x:Name="something" Text="{Binding name}" FontSize="Title" FontAttributes="Bold"/>
+
+                                        <Label HorizontalTextAlignment="Center"  Text="{Binding price_html}"  TextColor="Black"/>
+
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding attributes[0].name }" FontAttributes="Bold"/>
+                                                    <Span Text="{Binding attributes[0].options[0] , StringFormat=': {0}' }"  FontSize="Small" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding attributes[1].name }" FontAttributes="Bold"/>
+                                                    <Span Text="{ Binding attributes[1].options[0], StringFormat=': {0}'}"  FontSize="Small" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+
+                                        <Label HorizontalTextAlignment="Center" Text="{Binding stock_status}"  TextColor="Black" FontAttributes="Bold" FontSize="Large"/>
+                                        <ScrollView  Orientation="Vertical" >
+                                            <Label  Text="{x:Binding description }"  FontSize="Small" RelativeLayout.HeightConstraint="60" HorizontalTextAlignment="Center"/>
+                                        </ScrollView>
+                                        <Label HorizontalTextAlignment="Center" Text="{Binding sku, StringFormat='SKU {0:F0}'}" FontSize="Medium"></Label>
+
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black" IsVisible="{Binding _virtual}"  Text="{Binding Source={x:Reference stepper}, Path=Value, StringFormat='Qunatity: {0:F0}'}" FontAttributes="Bold" FontSize="Medium"></Label>
+
+                                        <Stepper IsVisible="{Binding _virtual}" x:Name="stepper"  Maximum="{Binding stock_quantity}"
+                                                 Value="{Binding productQuantity}"
+                                                 Minimum="{Binding meta_data[1].value}"
+                                             Increment="{Binding meta_data[2].value}"
+                                             HorizontalOptions="Center"
+                                             
+                                             ValueChanged="OnStepperValueChanged" />
+                                        <Button IsVisible="{Binding _virtual}" BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="10" Padding="10"  TextColor="White" x:Name="Pricevalue" BindingContext="{Binding id}" Text="Add To Cart" Clicked="AddtoCart"></Button>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </FlexLayout>
+    </ContentPage.Content>
+</ContentPage>

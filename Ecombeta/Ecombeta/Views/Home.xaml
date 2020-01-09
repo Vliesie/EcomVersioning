@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Ecombeta.Views.Home"
+         xmlns:local="Ecombeta:XFMasterDetailPageNavigation"
+           xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+            Title="Mica Market">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu" BackgroundColor="#0072BB">
+            <ContentPage.Resources>
+                <ResourceDictionary>
+                    <x:Int32 x:Key="SmallCornerRadius">4</x:Int32>
+                    <x:Int32 x:Key="MediumCornerRadius">8</x:Int32>
+                    <x:Int32 x:Key="LargeCornerRadius">16</x:Int32>
+                </ResourceDictionary>
+            </ContentPage.Resources>
+            <Grid BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid >
+                    <StackLayout Padding="0,10,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
+                        <Label HorizontalOptions="Center" FontAttributes="Bold" x:Name="Emailnav" FontSize="Large" FontFamily="droid sans mono" TextColor="White"></Label>
+                        <ffimageloading:CachedImage HorizontalOptions="Fill" VerticalOptions="Fill"
+                                            WidthRequest="120" HeightRequest="80"
+                                            DownsampleToViewSize="true"
+                                            Source = "https://www.mica.co.za/wp-content/themes/mica2016theme/images/logo.png">
+                        </ffimageloading:CachedImage>
+                    </StackLayout>
+                </Grid>
+                <StackLayout Margin="20,20,20,0" Grid.Row="1" Padding="10" Spacing="15">
+                    <ListView x:Name="navigationDrawerList" RowHeight="60"  SeparatorVisibility="Default" BackgroundColor="White" ItemSelected="OnMenuItemSelected">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell >
+                                    <!-- Main design for our menu items -->
+                                    <StackLayout  VerticalOptions="FillAndExpand" Margin="5" Orientation="Horizontal" Padding="20,10,0,10" Spacing="20">
+                                        <Image Source="{Binding Icon}"
+                                             WidthRequest="30"
+                                             HeightRequest="30"
+                                             VerticalOptions="Center" />
+
+                                        <Label Text="{Binding Title}"
+                                             FontSize="Medium"
+                                             VerticalOptions="Center"
+                                             TextColor="Black"/>
+                                        <Label x:Name="Emailnav" Text="" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button TextColor="White" Margin="0,0,0,10" CornerRadius="10"   FontSize="Small" FontAttributes="Bold" BackgroundColor="#F39000" x:Name="logoutbtn" Text="Logout" Clicked="logoutbtn_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
+    <!--Pages can be added as references or inline-->
+
+    
+ 

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:o="clr-namespace:Octane.Xamarin.Forms.VideoPlayer;assembly=Octane.Xamarin.Forms.VideoPlayer"
+             mc:Ignorable="d"
+             x:Class="Ecombeta.Views.Checkedout">
+    <ContentPage.Content>
+        <StackLayout Opacity="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Image x:Name="imageback" Aspect="AspectFill" Opacity="1" />
+                <Frame CornerRadius="20"   BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout  HorizontalOptions="Center" VerticalOptions="Center" >
+                        <o:VideoPlayer Source="https://mm-app.co.za/wp-content/uploads/2019/12/shopping_cart_2.mp4"
+                                      DisplayControls="False"
+                                       AutoPlay="True"
+                                       Repeat="True"
+                                       BackgroundColor="Transparent"
+                                       HeightRequest="300"
+                                       WidthRequest="300"
+                                     
+                                       />
+
+
+                        <Button  BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" Padding="10" TextColor="White" x:Name= "Shopping" Text = "Continue Shopping" 
+                    Clicked="Shopping_Clicked"
+                    VerticalOptions="End"
+                    HorizontalOptions = "Center"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

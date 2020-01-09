@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="Login"
+             BackgroundImageSource="https://mm-app.co.za/wp-content/uploads/2019/12/OrangeBluepoly.jpg"
+             x:Class="Ecombeta.Views.Login">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid>
+                
+                <StackLayout VerticalOptions="CenterAndExpand" Padding="15">
+                    <Label HorizontalOptions="Center" Text="Mica Market" FontSize="Title" FontAttributes="Bold" TextColor="White" ></Label>
+
+                    <Label HorizontalOptions="Center" Text="Use your credentials to log in" FontSize="Medium" TextColor="White" ></Label>
+
+                    <Frame  Margin="10" CornerRadius="20" BorderColor="LightGray">
+                        <Entry  x:Name = "Usernamelabel"   BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Placeholder = "Username" Text="{Binding Uname}"
+                   HeightRequest = "40"
+                  />
+                    </Frame>
+                    <Frame Margin="10" CornerRadius="20" BorderColor="LightGray">
+                        <Entry x:Name = "Password"  BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Text="{Binding Password}" Placeholder = "Password"
+                   HeightRequest = "40"
+                   IsPassword = "True"/>
+                    </Frame>
+
+                    <Button  BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" TextColor="White" x:Name= "loginbtn" Text = "Login " 
+                    Command="{Binding LoginCommand}"
+                    Clicked="loginbtn_Clicked"
+                    VerticalOptions="Center"
+                             Padding="15"
+                    HorizontalOptions = "Center"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

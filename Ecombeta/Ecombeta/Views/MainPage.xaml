@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:o="clr-namespace:Octane.Xamarin.Forms.VideoPlayer;assembly=Octane.Xamarin.Forms.VideoPlayer"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             mc:Ignorable="d"
+             Title="Home"
+             x:Class="Ecombeta.Views.MainPage">
+    <ContentPage.Content>
+        <StackLayout Spacing="0">
+            <ffimageloading:CachedImage 
+                                           HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand"
+                                            Aspect="Fill"
+                x:Name="Zmain"
+                                            DownsampleToViewSize="true"
+                                            Source="https://www.mica.co.za/wp-content/uploads/2019/08/article-image.jpg">
+            </ffimageloading:CachedImage>
+            <o:VideoPlayer
+                x:Name="Player"
+	            AutoPlay="True"
+                FillMode="ResizeAspectFill"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+	            Source="https://mm-app.co.za/wp-content/uploads/2019/12/HomeDefault.mp4"
+                Playing="VideoPlayer_OnPlaying"
+                Paused="VideoPlayer_OnStopped"
+                Completed="VideoPlayer_OnCompleted"
+	            />          
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
