@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "878171101111",
+    "firebase_url": "https://mica-marketapp.firebaseio.com",
+    "project_id": "mica-marketapp",
+    "storage_bucket": "mica-marketapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878171101111:android:914b5e41ba1a0d4670ba32",
+        "android_client_info": {
+          "package_name": "com.lionmarketing.ecombeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878171101111-0durma69ght3qc8ssv58pmn1mk77j7sc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2E92b8yCvWZptwRMMKy0LowFvXk0TFBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878171101111-0durma69ght3qc8ssv58pmn1mk77j7sc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
