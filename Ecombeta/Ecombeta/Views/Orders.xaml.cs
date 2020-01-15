@@ -63,14 +63,6 @@ namespace Ecombeta.Views
         string TempIsAvb;
         public int varID { get; set; }
 
-
-       
-        #endregion
-
-        #region Stepper 
-
-        #endregion
-
         public class ObjectNullConverter : IValueConverter
         {
             public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -298,23 +290,13 @@ namespace Ecombeta.Views
             {
                 priceinprogress = Convert.ToDecimal(z.price);
             }
-            //Setting Total Price
-
-            //Setting Quantity
-
-            //TO DO: Create a Temp List for Cart with the Cart page then Load all items into the Temp list and Union into Line ORders to set into Orders{ Lineorders = (MyList) }
 
             int index1 = 0;
-
             int index2 = 1;
             var listy = FullCart.Cartlistz;
-            
             int check;
-
             var btn = (Button)sender;
-
             var a = btn.BindingContext;
-
             check = Convert.ToInt32(a);
             
             if (z.type != "simple")
@@ -341,11 +323,7 @@ namespace Ecombeta.Views
                         }
                        
                         TempIncrementQ = Convert.ToInt32(cp.meta_data[2].value);
-                    
-                        //if (Convert.ToInt32(cp.meta_data[1].value) == 0)
-                        //{
-
-                        //}
+                
                         priceinprogress = Convert.ToDecimal(cp.price);
                         imagesrc = cp.image.src;
                         if (z.price == null)
@@ -530,11 +508,6 @@ namespace Ecombeta.Views
             #endregion
 
         }
-
-        public void Gocart()
-        {
-
-        }
         async void ProductClicked(object sender, EventArgs args)
         {
             string check;
@@ -549,6 +522,8 @@ namespace Ecombeta.Views
             try
             {
                 RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
+                WCObject wc = new WCObject(rest);
+                variablelistview.ItemsSource = p;
             }
             catch (Exception e)
             {

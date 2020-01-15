@@ -14,7 +14,7 @@ namespace Ecombeta
         Ecombeta.Views.Home mPage;
 
      
-       
+       //I have about 10% of an idea of wtf is happening with the Firebase Notifications Syntax makes mostly sense but it's still a confusing Library for me 
         public App()
         {
             InitializeComponent();

@@ -43,7 +43,7 @@ namespace Ecombeta.Views
                 }
             }
         }
-
+        //Encapsulation wich I dont understand RIP.  Hope i'm doing this right would appreciate feedback on this one. (I want it to also Show the Display alert even if the same Value gets sent in so Lets say the Id is 2 and I send another Notification with another Id of 2 5 minutes later then it should show again)
         private string _titlemessage;
         public string TitleMessage
         {
@@ -64,7 +64,7 @@ namespace Ecombeta.Views
 
         async void HandleCustomEvent(object sender, PropertyChangedEventArgs a)
         {
-          
+                //This is my Scuff way of getting live Supplier Changes from the Firebase Network
                 var y = await App.Current.MainPage.DisplayAlert("Flash Sale", Message, "Go Sale", "ok");
                 if (y)
                 {
@@ -92,7 +92,7 @@ namespace Ecombeta.Views
        {
             this.PropertyChanged += HandleCustomEvent;
 
-
+            //This is just the Menu
             x = "Mica Market";
             Title = x;
             InitializeComponent();

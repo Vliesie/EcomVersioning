@@ -35,48 +35,23 @@ namespace Ecombeta.Views
         public List<Customer> a;
         private async Task InitAsync()
         {
-
-
+            //There is about 98 Suppliers currentley its just a Image with a Button that passes a ID to use to get all Products under that Supplier Its basiclly just a Categorie 
             RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
             WCObject wc = new WCObject(rest);
            // var products = await wc.Tag.GetAll();
             var p = await wc.Tag.GetAll(new Dictionary<string, string>() {
 
-                   { "per_page", "80" } });
-
-
+                   { "per_page", "100" } });
             productsListView.FlowItemsSource = p;
-
-
-
-
-    }
-
-
-
-    private async Task LstCases_ItemSelectedAsync(object sender, SelectedItemChangedEventArgs e)
-        {
-         
         }
 
-
-
         async void SupplierClicked(object sender, EventArgs args)
-        {
-
-                
+        {  
             var btn = (Button)sender;
-
             var product = btn.BindingContext;
 
             tagid = product.ToString();
-
-
             await Navigation.PushAsync(new Products());
-
-          
-
-
 
         }
     }

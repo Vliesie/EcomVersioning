@@ -16,6 +16,7 @@ namespace Ecombeta.Views
         SignUpVM signUpVM;
         public SignUpPage()
         {
+            //This is for Testing its not needed
             InitializeComponent();
             signUpVM = new SignUpVM();
             //set binding

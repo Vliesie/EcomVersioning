@@ -14,6 +14,7 @@ namespace Ecombeta.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FlashSale_s : ContentPage
     {
+        //Passing in From the App.xaml.cs It takes the Title From the push notification as X then passes it into the Init Method with z then loads the Products under that Tag(Categorie)
         public FlashSale_s(string x)
         {
             InitializeComponent();
@@ -35,28 +36,12 @@ namespace Ecombeta.Views
         }
         async void ProductClicked(object sender, EventArgs args)
         {
-
             var btn = (Button)sender;
-
             var a = btn.BindingContext;
+
 
             Orders.singleID = Convert.ToInt32(a);
             await Navigation.PushAsync(new Orders());
-
-            // var z = p.type;
-            // bool checkSimple = bool.Parse(z);
-
-            // if (checkSimple = checkSimple2)
-            //{
-            //  productsListView.ItemsSource = new Product[1] { p };
-            //}
-
-            //if (p.grouped_products != null)
-            //{
-
-            //  var a = await wc.Product.GetAll();
-            // variablelistview.ItemsSource = a;
-            //}
         }
     }
 }

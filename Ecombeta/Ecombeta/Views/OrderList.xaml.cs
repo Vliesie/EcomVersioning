@@ -29,6 +29,8 @@ namespace Ecombeta.Views
           
         public async void Init()
         {
+
+            //Displaying every order the user has made based on there id So Customer ID
             RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
             WCObject wc = new WCObject(rest);
 

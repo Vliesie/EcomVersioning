@@ -5,12 +5,7 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              x:Class="Ecombeta.Views.Products"
              Title="Products"
-             
-          
-            
              x:Name="Testing">
-
-
 
     <ContentPage.Content>
         <flv:FlowListView BackgroundColor="white" FlowColumnCount="2" HasUnevenRows="false" RowHeight="450"  HorizontalOptions="Fill" VerticalOptions="Fill"  SeparatorVisibility="Default" SeparatorColor="Black" x:Name="productsListView" >

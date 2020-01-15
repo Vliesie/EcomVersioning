@@ -60,11 +60,8 @@ namespace Ecombeta.Views
          private void Removevalue_Clicked(object sender, EventArgs e)
          {
             int check;
-
             var btn = (ImageButton)sender;
-
             var item = btn.BindingContext;
-
             check = Convert.ToInt32(item);
           
             Cartlist listitem = (from itm in items.Items where itm.PId == check select itm).FirstOrDefault<Cartlist>();
@@ -104,10 +101,11 @@ namespace Ecombeta.Views
 
         private async void ImageButton_Clicked(object sender, EventArgs e)
         {
+
+            //You cant checkout if your not logged in There are no Guest Checkouts(I can But would rather not)
           if (Users.Loggedin == true)
           {
 
-         
             if (Lineitems == null)
             {
                 Lineitems = new List<OrderLineItem>();
@@ -183,6 +181,7 @@ namespace Ecombeta.Views
             }
         }
 
+        //Checks for stock quantity for variable's and singles incase theres no more stocks left this needs IMMENSE testing.
         public async void Check()
         {
             RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
@@ -245,20 +244,14 @@ namespace Ecombeta.Views
                 }
             }
         }
-        private void Checkout(object sender, EventArgs e)
-        {
 
-        }
-
+        //Checkout Button 
         private void Button_Clicked(object sender, EventArgs e)
         {
-           
+            var masterDetailPage = new Home("");
 
-                var masterDetailPage = new Home("");
             masterDetailPage.Detail = new NavigationPage(new Suppliers());
             Application.Current.MainPage = masterDetailPage;
-          
-            
         }
     }
 }
