@@ -109,6 +109,11 @@ namespace Ecombeta.Views
             var xxxx = p;
             var indexer = 0;
 
+            // NOt to sure how Threading works but I want this to run on its own Thread as its somewhat intense || Cant Test this but Hoping this calls the Method and Starts it on a new thread then auto kills it self when its done
+            Thread SThread = new Thread(Orders.StringReplace);
+            SThread.Start();
+
+
             //Simple Quantity checks
             foreach (var item in z.meta_data)
             {
@@ -211,6 +216,8 @@ namespace Ecombeta.Views
             var x = z.price;
             Tempprice = Convert.ToDecimal(x);
            
+            
+
             if (z != null || p != null)
             {
                 if (z.price_html != null)
@@ -529,6 +536,15 @@ namespace Ecombeta.Views
             {
                 DisplayAlert(e.ToString(), "No Variations to Show", "Okay");
             }
+        }
+
+        async void StringReplace(){
+          //Replaces all the stupid HTML tags that come along with the Description
+            foreach(var item in p){
+      
+                 item.description = item.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>',''); 
+            }
+            z.description = z.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>',''); 
         }
     }
 }
