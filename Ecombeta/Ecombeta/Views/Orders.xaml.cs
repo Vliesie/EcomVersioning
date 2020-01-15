@@ -541,10 +541,9 @@ namespace Ecombeta.Views
         async void StringReplace(){
           //Replaces all the stupid HTML tags that come along with the Description
             foreach(var item in p){
-      
-                 item.description = item.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>',''); 
+               item.description = item.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>','').Replace('</p>', '').Replace('</ul>', '').Replace('</li>', ''); 
             }
-            z.description = z.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>',''); 
+            z.description = z.description.Replace('<p>', '').Replace('<ul>', '').Replace('<li>', '').Replace('<ol>','').Replace('<strong>','').Replace('<span>','').Replace('<a>','').Replace('<i>','').Replace('</p>', '').Replace('</ul>', '').Replace('</li>', ''); 
         }
     }
 }

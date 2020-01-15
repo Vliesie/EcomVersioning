@@ -76,9 +76,9 @@ namespace Ecombeta.Views
                     //Then its gonna fetch every supplier then im going to check against every supplier if the title message I got from app.xaml.cs is = to one of the suppliers name's
                     //It should set flashID to the id of that supplier and give that to the Flashsale page to display the item's thus no Ugly ints in the Push notifications
                     string flashID;
-                     var p = await wc.Tag.GetAll(new Dictionary<string, string>() {
+                    var p = await wc.Tag.GetAll(new Dictionary<string, string>() {
 
-                      { "per_page", "100" } });
+                    { "per_page", "100" } });
 
                     foreach(var item in p){
                          if(_titlemessage == item.name){
