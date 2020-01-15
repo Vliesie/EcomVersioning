@@ -12,7 +12,7 @@ namespace Ecombeta.Services
 {
     class WoocommerceAPI
     {
-        
+        //This is my Own Pull for the WoocomAPI without the Wrapper I get Thread errors on the Desarialize Bit.
 
         private static string website_url = "https://azipit.co.za/mica-market-app";
         private static string consumer_key = "ck_0112f135e2f9b32cc147f28028fd621f919bc890";

@@ -253,8 +253,8 @@ namespace Ecombeta.Views
                             // item.shipping_class_id = "From R" + item.regular_price.ToString() + " To " + "R" + item.sale_price.ToString() + "On Sale";
                         }
                     }
-                    Title = "Multi Product";
-                    variablelistview.ItemsSource = p;
+                    Title = "Multi Product";//This Doest Work but w.e 
+                    variablelistview.ItemsSource = p; 
                 }
 
             }

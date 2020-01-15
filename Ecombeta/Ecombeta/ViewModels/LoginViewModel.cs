@@ -18,6 +18,7 @@ namespace Ecombeta.ViewModel
 {
     public class LoginViewModel : INotifyPropertyChanged
     {
+        //Not Using this just keeping it as a Example
         public bool loginsuc;
         public List<Customer> customers;
         public event PropertyChangedEventHandler PropertyChanged;
