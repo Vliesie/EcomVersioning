@@ -64,12 +64,27 @@ namespace Ecombeta.Views
 
         async void HandleCustomEvent(object sender, PropertyChangedEventArgs a)
         {
+             RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
+             WCObject wc = new WCObject(rest);
+   
                 //This is my Scuff way of getting live Supplier Changes from the Firebase Network
                 var y = await App.Current.MainPage.DisplayAlert("Flash Sale", Message, "Go Sale", "ok");
                 if (y)
                 {
-                    await Navigation.PushAsync(new FlashSale_s(TitleMessage));
+                    //I cant test this but writing this from my head in Notepad xD || What I expect this to do is Instead of passing a ID into the title ill give a name
+                    // Then its gonna fetch every supplier then im going to check against every supplier if the title message I got from app.xaml.cs is = to one of the suppliers name's
+                    // It should set flashID to the id of that supplier and give that to the Flashsale page to display the item's thus no Ugly ints in the Push notifications
+                    string flashID;
+                     var p = await wc.Tag.GetAll(new Dictionary<string, string>() {
 
+                      { "per_page", "100" } });
+
+                    foreach(var item in p){
+                         if(_titlemessage == item.name){
+                         flashID = item.id
+                      }
+                    }
+                    await Navigation.PushAsync(new FlashSale_s(flashID));
                 }
          
             
@@ -79,11 +94,8 @@ namespace Ecombeta.Views
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
             if (PropertyChanged != null)
-            {
-                
+            {              
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            
-
             }
         }
 
@@ -156,7 +168,7 @@ namespace Ecombeta.Views
             Detail = new NavigationPage((Page)Activator.CreateInstance(typeof(MainPage)));
 
             NavigationPage.SetHasBackButton(this, false);
-
+            //This just saves tot he Microsoft Prefrences Servers Its better then System Propertiers (Setting files on the phone) In my Expierence atleast
             #region Data Persistance
             if (Preferences.ContainsKey("CId"))
             {
