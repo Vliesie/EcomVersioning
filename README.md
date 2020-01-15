@@ -22,5 +22,5 @@ Move Project to Release Project: MicaMarket
 
 
 Note's:
-
+There will be some errors as im adding methods on notepad and I dont know the Using statements for them so just add the usings and they should work Its on the Orders page and Suppliers + Home page I think 
 I dont use the VMMV pattern, As The Bindings all need Encapsulation wich I dont get atm One's I do ill switch it over its basiclly just that You use Classes with all the Methods and u Use stuff like Delegates to Keep calling the same Method Its my Next step after Being done with all the functions

@@ -71,6 +71,7 @@ namespace Ecombeta.Views
                 var y = await App.Current.MainPage.DisplayAlert("Flash Sale", Message, "Go Sale", "ok");
                 if (y)
                 {
+                    
                     //I cant test this but writing this from my head in Notepad xD || What I expect this to do is Instead of passing a ID into the title ill give a name
                     // Then its gonna fetch every supplier then im going to check against every supplier if the title message I got from app.xaml.cs is = to one of the suppliers name's
                     // It should set flashID to the id of that supplier and give that to the Flashsale page to display the item's thus no Ugly ints in the Push notifications
