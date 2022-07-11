@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecombeta.Android", "Ecombet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecombeta.iOS", "Ecombeta\Ecombeta.iOS\Ecombeta.iOS.csproj", "{4E168FFD-E7E7-478F-9756-7EB9043D01A2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecombeta", "Ecombeta\Ecombeta\Ecombeta.csproj", "{7E9773E7-3648-48C6-BA75-A48607E60608}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecombeta", "Ecombeta\Ecombeta\Ecombeta.csproj", "{7E9773E7-3648-48C6-BA75-A48607E60608}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

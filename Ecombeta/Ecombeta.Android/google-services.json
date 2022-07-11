@@ -30,6 +30,13 @@
             {
               "client_id": "878171101111-0durma69ght3qc8ssv58pmn1mk77j7sc.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "878171101111-lf62ii8co5unsdltlugfhfdidkbhdean.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.LionmarketingEcombeta"
+              }
             }
           ]
         }

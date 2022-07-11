@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"    xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" x:Class="Ecombeta.Views.NotificationFeed">
+    <ContentPage.Content>
+       <Grid BackgroundColor="Black">
+            <ListView
+                x:Name="Feedlist"
+                HasUnevenRows="True"
+                 
+                   
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          SeparatorVisibility="None">
+                  <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                     <Grid>
+                            <ffimageloading:CachedImage x:Name="background"  DownsampleToViewSize="True" Opacity="0.6" Source="{Binding FCMImage}" Aspect="AspectFill" />
+                            <StackLayout>
+                                <StackLayout VerticalOptions="CenterAndExpand">
+                                    <Label FontSize="50" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="{Binding Title}" FontFamily="Montserrat" />
+                                 
+                                    <Label Margin="20,20,20,0" FontSize="14" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="{Binding Message}"  FontFamily="Montserrat" />
+                                </StackLayout>
+                                <Label VerticalOptions="EndAndExpand" Margin="0,0,0,40" FontSize="12" HorizontalTextAlignment="Center" TextColor="#EEE" Text="{Binding Id}"  FontFamily="Montserrat" />
+                            </StackLayout>
+                                   </Grid>
+                                </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                      </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

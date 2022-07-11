@@ -1,0 +1,82 @@
+﻿<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+              
+    xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+    xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Ecombeta.Views.ProductReport">
+    <pages:PopupPage.Resources>
+    <ResourceDictionary>
+      <Style x:Key="EntryStyle" TargetType="Entry">
+        <Setter Property="PlaceholderColor" Value="#9cdaf1"/>
+        <Setter Property="TextColor" Value="#7dbbe6"/>
+      </Style>
+    </ResourceDictionary>
+  </pages:PopupPage.Resources>
+  <pages:PopupPage.Animation>
+    <animations:ScaleAnimation
+      PositionIn="Bottom"
+      PositionOut="Center"
+      ScaleIn="1"
+      ScaleOut="0.7"
+      DurationIn="700"
+      EasingIn="BounceOut"/>
+  </pages:PopupPage.Animation>
+
+
+      <Frame
+        x:Name="FrameContainer"
+    VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        BackgroundColor="White">
+        <StackLayout
+            IsClippedToBounds="True"
+            HorizontalOptions="FillAndExpand"
+                VerticalOptions="FillAndExpand"
+            >
+            <Label Text="Order Error" HorizontalOptions="Center" FontSize="Title" FontAttributes="Bold" TextColor="Maroon" ></Label>
+           <ListView    HasUnevenRows="true"
+                       SeparatorVisibility="Default"
+                      
+                       VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand" x:Name="ErrorReport">
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                            
+                    <StackLayout VerticalOptions="CenterAndExpand"
+                        HorizontalOptions="CenterAndExpand">
+                                    <Label TextColor="Black" Text="The Follow Products Are low or outofStock" FontSize="Large"  FontAttributes="Bold"></Label>
+              <Label Text="{Binding ProductName}"
+                       FontSize="Large"
+                            x:Name="lblLoadingText"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            TextColor="Black" />
+                         <Label HorizontalTextAlignment="Center" TextColor="Black">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="Stock left:" />
+                                                        <Span Text="{Binding StockQuantity}" FontAttributes="Bold"
+                                                              FontSize="Medium" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                </Label>
+         
+                                   
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                </ListView.ItemTemplate>
+               </ListView>
+               <Button Text="Close" BackgroundColor="Black"  TextColor="white" Clicked="Button_Clicked"></Button>
+          </StackLayout>
+        
+      </Frame>
+     
+ 
+</pages:PopupPage>
+  
+
+
+  

@@ -1,58 +1,78 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage  xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-              x:Class="Ecombeta.Views.Suppliers"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             x:Class="Ecombeta.Views.Suppliers"
              Title="Suppliers"
-           x:Name="ImageBack"  >
-            
-          
+             x:Name="ImageBack">
+
+
     <ContentPage.Content>
-        
-        <FlexLayout  Wrap="Wrap" Direction="Row" JustifyContent="SpaceEvenly" >
-            <flv:FlowListView x:Name="productsListView"
-                 
-                     FlowColumnCount="2" HasUnevenRows="false" RowHeight="320"
-                  VerticalOptions="FillAndExpand"
-                      SeparatorVisibility="None"
-                      SelectedItem="{Binding Name}"
-                      >
-                
-                <flv:FlowListView.FlowColumnTemplate>
-                    <DataTemplate>
-                        <Grid Padding="5">
-                            <Frame BorderColor="#f39000" HeightRequest="310" >
-                                <StackLayout   Orientation="Vertical" Spacing="5">
+        <AbsoluteLayout>
+        <Grid>
+            <StackLayout
+                x:Name="LoadingOverlay"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black" Opacity="0.5">
+                <ActivityIndicator
+                    x:Name="TaskLoader"
+                    IsRunning="False"
+                    Scale="2"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="White" />
+            </StackLayout>
+            <StackLayout Margin="0,0,0,10" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
+                <SearchBar Keyboard="Email" BackgroundColor="white" Placeholder="Search Suppliers"
+                           TextChanged="SearchBar_TextChanged" />
 
-                                    <Label HorizontalTextAlignment="Center" FontSize="Medium" FontAttributes="Bold" TextColor="Black" x:Name="idlabel" Text="{Binding name}">
+                <StackLayout BackgroundColor="Transparent" >
+                    <flv:FlowListView x:Name="productsListView"
+                                      BackgroundColor="Transparent"
+                                      FlowColumnCount="2" HasUnevenRows="false" RowHeight="320"
+                                      VerticalOptions="FillAndExpand"
+                                      HorizontalOptions="FillAndExpand"
+                                      SeparatorVisibility="None"
+                                      SelectedItem="{Binding Name}  ">
+                        <flv:FlowListView.FlowColumnTemplate>
+                            <DataTemplate>
+                                <Grid Padding="5">
+                                    <Frame BackgroundColor="White" BorderColor="White" HeightRequest="310">
+                                        <StackLayout BackgroundColor="white" Orientation="Vertical" Spacing="5">
 
-                                    </Label>
-                                    <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
-                                            WidthRequest="150" HeightRequest="150"
-                                            DownsampleToViewSize="true"
-                                            Source = "{Binding description}">
-                                    </ffimageloading:CachedImage>
-                                    
-                                      
-                                
-                                    <Button Text="See Products" 
-                                            Padding="5"
-                                           FontSize="Small"
-                                                BorderColor="#f39000"
-                                                BackgroundColor="#f39000"
-                                         CornerRadius="10"
-                                                TextColor="White"
-                                            VerticalOptions="CenterAndExpand"
-                                            HorizontalOptions="Center"
-                                            Clicked="SupplierClicked" 
-                                                BindingContext="{Binding id}"/>
-                                </StackLayout>
-                            </Frame>
-                        </Grid>
-                    </DataTemplate>
-                </flv:FlowListView.FlowColumnTemplate>
-            </flv:FlowListView>
-        </FlexLayout>
+                                            <Label HorizontalTextAlignment="Center" FontSize="Medium"
+                                                   FontAttributes="Bold" TextColor="Black" x:Name="idlabel"
+                                                   Text="{Binding name}" />
+                                            <ffimageloading:CachedImage HorizontalOptions="Center"
+                                                                        VerticalOptions="Center"
+                                                                        WidthRequest="150" HeightRequest="150"
+                                                                        DownsampleToViewSize="true"
+                                                                        Source="{Binding description}" />
+                                            <Button Text="See Products"
+                                                    Padding="5"
+                                                    FontSize="Small"
+                                                    BorderColor="#f39000"
+                                                    BackgroundColor="#f39000"
+                                                    CornerRadius="10"
+                                                    TextColor="White"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    HorizontalOptions="Center"
+                                                    Clicked="SupplierClicked"
+                                                    BindingContext="{Binding id}" />
+                                        </StackLayout>
+                                    </Frame>
+                                </Grid>
+                            </DataTemplate>
+                        </flv:FlowListView.FlowColumnTemplate>
+                    </flv:FlowListView>
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+            </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

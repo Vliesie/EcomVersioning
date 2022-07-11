@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿    using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -15,17 +10,14 @@ namespace Ecombeta.Views
         public Checkedout()
         {
             InitializeComponent();
-            //try
-            //{
-            //    suc.Source = "https://mm-app.co.za/wp-content/uploads/2019/12/shopping_cart_2.gif";
-            //}
-            //catch (Exception)
-            //{
-             
-               
-            //}
-           
-            imageback.Source = "https://mm-app.co.za/wp-content/uploads/2019/12/Orangepoly-e1576143689778.jpg";
+
+            try
+            {
+                imageback.Source = "https://mm-app.co.za/wp-content/uploads/2019/12/Orangepoly-e1576143689778.jpg";
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         private void Shopping_Clicked(object sender, EventArgs e)

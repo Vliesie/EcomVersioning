@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Ecombeta.Models
+﻿namespace Ecombeta.Models
 {
     public enum MenuItemType
     {
         Browse,
         About
     }
+
     public class HomeMenuItem
     {
         public MenuItemType Id { get; set; }

@@ -23,15 +23,17 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchArch>i386, x86_64</MtouchArch>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>8.0</LangVersion>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <CodesignProvision />
+    <CodesignKey>Apple Development: russell@lionmarketing.co.za (UNZ249N7UV)</CodesignKey>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <CodesignEntitlements />
+    <CodesignProvision>iOS Team Provisioning Profile: com.LionmarketingEcombeta2</CodesignProvision>
+    <MtouchExtraArgs>--registrar:static -v -v -v -v</MtouchExtraArgs>
+    <OptimizePNGs>false</OptimizePNGs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -40,8 +42,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
-    <MtouchArch>x86_64</MtouchArch>
+    <MtouchArch>i386, x86_64</MtouchArch>
     <LangVersion>8.0</LangVersion>
+    <CodesignProvision>AdhockRoy</CodesignProvision>
+    <CodesignKey>Apple Distribution: Lion Marketing CC (NGM5584RR4)</CodesignKey>
+    <ConsolePause>true</ConsolePause>
+    <ExternalConsole>false</ExternalConsole>
+    <Commandlineparameters></Commandlineparameters>
+    <RunWithWarnings>false</RunWithWarnings>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,18 +61,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: Russell Nagel (X5D23J6C9N)</CodesignKey>
+    <CodesignKey>Apple Development: Russell Nagel (X5D23J6C9N)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>
     </CodesignEntitlements>
     <LangVersion>8.0</LangVersion>
-    <CodesignProvision>VS: com.companyname.Ecombeta Development</CodesignProvision>
+    <CodesignProvision>iOS Team Provisioning Profile: com.LionmarketingEcombeta</CodesignProvision>
     <CodesignExtraArgs />
     <CodesignResourceRules>
     </CodesignResourceRules>
     <BuildIpa>true</BuildIpa>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchFastDev>true</MtouchFastDev>
+    <MtouchHttpClientHandler>CFNetworkHandler</MtouchHttpClientHandler>
+    <OptimizePNGs>false</OptimizePNGs>
+    <MtouchInterpreter>-all</MtouchInterpreter>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -71,14 +83,17 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchArch>ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <CodesignEntitlements>
-    </CodesignEntitlements>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <LangVersion>8.0</LangVersion>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BuildIpa>true</BuildIpa>
+    <IpaIncludeArtwork>true</IpaIncludeArtwork>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
@@ -96,49 +111,22 @@
     <BundleResource Include="Resources\Montserrat-Medium.ttf" />
     <BundleResource Include="Resources\Montserrat-Regular.ttf" />
     <BundleResource Include="Resources\Montserrat-SemiBold.ttf" />
+    <BundleResource Include="Resources\IC1.png" />
+    <BundleResource Include="Resources\IC2.png" />
+    <BundleResource Include="Resources\IC3.png" />
+    <BundleResource Include="Resources\IC4.png" />
+    <BundleResource Include="Resources\IC5.png" />
+    <BundleResource Include="Resources\IC6.png" />
+    <BundleResource Include="Resources\IC7.png" />
+    <BundleResource Include="Resources\IC8.png" />
+    <BundleResource Include="Resources\IC9.png" />
+    <Compile Include="ViewCellRendererForiOS.cs" />
+    <BundleResource Include="Resources\MicaSplash.png" />
+    <BundleResource Include="Resources\Cartcon.png" />
     <BundleResource Include="GoogleService-Info.plist" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
     <BundleResource Include="Resources\tab_about.png" />
@@ -153,16 +141,29 @@
     <ImageAsset Include="Assets.xcassets\Splash.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Splash.imageset\Splash.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Splash.imageset\Splash1.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Splash.imageset\Splash2.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\167.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-20x20%402x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon-App-20x20%403x.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\MicaAppStoreLogo.png" />
+    <ImageAsset Include="Assets.xcassets\Splash.imageset\MicaSplash.png" />
+    <ImageAsset Include="Assets.xcassets\Splash.imageset\MicaSplash-1.png" />
+    <ImageAsset Include="Assets.xcassets\Splash.imageset\MicaSplash-2.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -174,42 +175,54 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Auth0.OidcClient.iOS">
-      <Version>3.1.0</Version>
+      <Version>3.3.4</Version>
     </PackageReference>
     <PackageReference Include="FirebaseDatabase.net">
-      <Version>4.0.4</Version>
+      <Version>4.0.7</Version>
     </PackageReference>
     <PackageReference Include="Octane.Xam.VideoPlayer">
       <Version>3.1.0</Version>
     </PackageReference>
     <PackageReference Include="Plugin.FirebasePushNotification">
-      <Version>2.3.6</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>17.3.0.34</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>17.3.0.34</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>17.3.0.34</Version>
+      <Version>3.4.25</Version>
     </PackageReference>
     <PackageReference Include="Toasts.Forms.Plugin">
       <Version>3.3.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.Auth">
-      <Version>6.2.1.1</Version>
+      <Version>8.10.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.iOS.CloudMessaging">
-      <Version>4.1.1.1</Version>
+      <Version>4.7.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Rg.Plugins.Popup">
+      <Version>2.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="CarouselView.FormsPlugin">
+      <Version>6.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="CarouselView.FormsPlugin.Fix">
+      <Version>5.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Build.Download">
+      <Version>0.11.2</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Firebase.iOS.InstanceID">
+      <Version>4.8.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Firebase.iOS.Core">
+      <Version>8.10.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Firebase.iOS.Installations">
+      <Version>8.10.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\Ecombeta\Ecombeta.csproj">
-      <Project>{0FDF5B64-3B2F-4595-8F23-A0D05ECEEF66}</Project>
+      <Project>{7E9773E7-3648-48C6-BA75-A48607E60608}</Project>
       <Name>Ecombeta</Name>
     </ProjectReference>
   </ItemGroup>
@@ -254,5 +267,11 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Splash.png">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+    </AndroidResource>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
@@ -8,23 +9,37 @@
              x:Name="Testing">
 
     <ContentPage.Content>
-        <flv:FlowListView BackgroundColor="white" FlowColumnCount="2" HasUnevenRows="false" RowHeight="450"  HorizontalOptions="Fill" VerticalOptions="Fill"  SeparatorVisibility="Default" SeparatorColor="Black" x:Name="productsListView" >
+        <flv:FlowListView BackgroundColor="white" FlowColumnCount="2" HasUnevenRows="false" RowHeight="450"
+                          HorizontalOptions="Fill" VerticalOptions="Fill"  SeparatorVisibility="None"
+                          SeparatorColor="Black" x:Name="productsListView">
             <flv:FlowListView.FlowColumnTemplate>
                 <DataTemplate>
-                    <Grid Padding="5">
-                        <StackLayout  Orientation="Vertical" Spacing="5">
-                            <Label x:Name="something" Text="{Binding name}" Margin="3" FontSize="Medium" HeightRequest="62" RelativeLayout.HeightConstraint="60" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontAttributes="Bold" TextColor="#F39000"/>
-                            <ffimageloading:CachedImage HorizontalOptions="Center"  VerticalOptions="Center"
-                                           HeightRequest="200" WidthRequest="200"
-                                            DownsampleToViewSize="true"
-                                                    Aspect="AspectFill"
-                                            Source = "{Binding images[0].src}" />
+                   
+                    <Grid Padding="1">
+                        <Frame  BorderColor="#66000000" Margin="1">
+                        <StackLayout Orientation="Vertical" Spacing="0">
+                            <Label x:Name="something" Text="{Binding name}" Margin="3" FontSize="Medium"
+                                   HeightRequest="62" RelativeLayout.HeightConstraint="60"
+                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                                   FontAttributes="Bold" TextColor="#F39000" />
+                            <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                                        HeightRequest="200" WidthRequest="200"
+                                                        DownsampleToViewSize="true"
+                                                        Aspect="AspectFit"
+                                                        Source="{Binding images[0].src}" />
 
-                            <Label Text="{Binding price,   StringFormat='R{0:F0}'}" TextColor="Red" FontAttributes="Bold" FontSize="Medium"  HorizontalTextAlignment="Center"/>
-                            <Label Text="{x:Binding sku,  StringFormat='SKU{0:F0}'}" FontSize="Medium" FontAttributes="Bold"  HorizontalTextAlignment="Center"/>
-                            <Button BorderColor="#0088d3" BackgroundColor="#0088d3" TextColor="white" VerticalOptions="EndAndExpand" HorizontalOptions="Center" CornerRadius="10" Padding="10"  Text="View Product" BindingContext="{Binding id}" Clicked="ProductClicked"></Button>
-                    </StackLayout>
+                            
+                            <Label Text="{Binding sku,  StringFormat='SKU{0:F0}'}" FontSize="Medium"
+                                   FontAttributes="Bold" HorizontalTextAlignment="Center" />
+                            
+                            <Button BorderColor="#0088d3" BackgroundColor="#0088d3" TextColor="white"
+                                    VerticalOptions="EndAndExpand" HorizontalOptions="Center" CornerRadius="10"
+                                    Padding="10" Text="View Product" BindingContext="{Binding id}"
+                                    Clicked="ProductClicked" />
+                        </StackLayout>
+                            </Frame>
                     </Grid>
+                      
                 </DataTemplate>
             </flv:FlowListView.FlowColumnTemplate>
         </flv:FlowListView>

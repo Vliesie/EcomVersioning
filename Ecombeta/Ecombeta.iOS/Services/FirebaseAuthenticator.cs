@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Firebase.Auth;
 using Ecombeta.Services;
+using Firebase.Auth;
 
 namespace XFFirebaseAuthExample.iOS.Services
 {
@@ -8,7 +8,7 @@ namespace XFFirebaseAuthExample.iOS.Services
     {
         public async Task<string> LoginWithEmailPassword(string email, string password)
         {
-            AuthDataResult user = await Auth.DefaultInstance.SignInWithPasswordAsync(email, password);
+            var user = await Auth.DefaultInstance.SignInWithPasswordAsync(email, password);
             return await user.User.GetIdTokenAsync(false);
         }
     }

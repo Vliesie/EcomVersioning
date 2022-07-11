@@ -1,26 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Ecombeta.Models
 {
-   public class MasterPageItem
+    public class MasterPageItem
     {
-        public string Title
-        {
-            get;
-            set;
-        }
-        public string Icon
-        {
-            get;
-            set;
-        }
-        public Type TargetType
-        {
-            get;
-            set;
-        }
+        public string Title { get; set; }
 
+        public string Icon { get; set; }
+
+        public Type TargetType { get; set; }
     }
 }

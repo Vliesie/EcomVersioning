@@ -1,72 +1,98 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             x:Name="Orderlist"
+             BackgroundImageSource="https://mm-app.co.za/wp-content/uploads/2019/12/Bluepoly.jpg"
              x:Class="Ecombeta.Views.OrderList">
     <ContentPage.Content>
-
-        <StackLayout Opacity="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-                <Image x:Name="Imageback" Aspect="AspectFill" Opacity="1" />
+        <Grid>
+            <StackLayout
+                x:Name="LoadingOverlay"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black" Opacity="0.5">
+                <ActivityIndicator
+                    x:Name="TaskLoader"
+                    IsRunning="False"
+                    Scale="3"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="White" />
+            </StackLayout>
+            <StackLayout BackgroundColor="Transparent" HorizontalOptions="FillAndExpand"
+                         VerticalOptions="FillAndExpand">
 
 
                 <ListView x:Name="Orderslist"
-                       HasUnevenRows="True"   
-                      VerticalOptions="FillAndExpand"
-                      HorizontalOptions="FillAndExpand"
-                      SeparatorVisibility="None" >
+                          HasUnevenRows="True"
+
+                          BackgroundColor="Transparent"
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <ViewCell.View>
 
-                                    <Frame CornerRadius="20" BackgroundColor="White" Margin="10" Padding="10">
+                                    <Frame  BackgroundColor="White" Margin="5" Padding="5">
                                         <StackLayout Orientation="Vertical" Spacing="0">
-                                            <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label HorizontalTextAlignment="Center" TextColor="Black">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="ID" FontAttributes="Bold" FontSize="Large" />
-                                                        <Span Text="{ Binding id }" FontAttributes="Bold" FontSize="Large" />
+                                                        <Span Text="ID" FontSize="Medium" />
+                                                        <Span Text="{ Binding id }" FontAttributes="Bold"
+                                                              FontSize="Title" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                            <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label HorizontalTextAlignment="Center" TextColor="Black">
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="Mail:" />
-                                                        <Span Text="{ Binding billing.email }" FontAttributes="Bold" FontSize="Medium" />
+                                                        <Span Text="{ Binding billing.email }" FontAttributes="Bold"
+                                                              FontSize="Medium" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                            <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label HorizontalTextAlignment="Center" TextColor="Black">
                                                 <Label.FormattedText>
                                                     <FormattedString>
                                                         <Span Text="Date:" />
-                                                        <Span Text="{ Binding date_created }" FontAttributes="Bold" FontSize="Medium" />
+                                                        <Span Text="{ Binding date_created }" FontAttributes="Bold"
+                                                              FontSize="Medium" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                            <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label HorizontalTextAlignment="Center" TextColor="Black">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="Status:"/>
-                                                        <Span Text="{ Binding status }"  FontAttributes="Bold" FontSize="Medium" />
+                                                        <Span Text="Status:" />
+                                                        <Span Text="{ Binding status }" FontAttributes="Bold"
+                                                              FontSize="Medium" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
-                                            <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                            <Label HorizontalTextAlignment="Center" TextColor="Black">
                                                 <Label.FormattedText>
                                                     <FormattedString>
-                                                        <Span Text="Total:" />
-                                                        <Span Text="{ Binding total, StringFormat='Total R:{0,5:#,0.00}'  }" FontAttributes="Bold" FontSize="Medium" />
+
+                                                        <Span
+                                                            Text="{ Binding total, StringFormat='Total R:{0,5:#,0.00}'  }"
+                                                            FontAttributes="Bold" FontSize="Medium" />
                                                     </FormattedString>
                                                 </Label.FormattedText>
                                             </Label>
 
 
-                                            <Button BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="10" Padding="10"  TextColor="White"  HorizontalOptions="CenterAndExpand" Text="View" Clicked="Button_Clicked" BindingContext="{Binding id}" ></Button>
+                                            <Button BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="10"
+                                                    Padding="10" TextColor="White" HorizontalOptions="CenterAndExpand"
+                                                    Text="View" Clicked="Button_Clicked" BindingContext="{Binding id}" />
                                         </StackLayout>
                                     </Frame>
                                 </ViewCell.View>
@@ -74,7 +100,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            </Grid>
-        </StackLayout>
+
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

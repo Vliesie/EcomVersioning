@@ -1,26 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Name="Backimage"
-            
+
              x:Class="Ecombeta.Views.SingleOrder">
     <ContentPage.Content>
-        <StackLayout Opacity="1" HorizontalOptions="FillAndExpand"  Margin="4,0,4,0"  VerticalOptions="FillAndExpand">
+        <StackLayout BackgroundColor="Transparent" Spacing="0" Opacity="1" HorizontalOptions="FillAndExpand"
+                     Margin="4,0,4,0" VerticalOptions="StartAndExpand">
+            <Label Text="Main Order" TextColor="White" HeightRequest="30" HorizontalOptions="Center"
+                   VerticalOptions="Center" FontSize="Title" FontAttributes="Bold" />
+
             <ListView x:Name="SingleOrderList"
-                      HasUnevenRows="True"   
-                      VerticalOptions="StartAndExpand"
-                      HorizontalOptions="StartAndExpand"
-                      SeparatorVisibility="Default"   >
+                      BackgroundColor="Transparent"
+                      HasUnevenRows="True"
+                      HeightRequest="310"
+             
+                      VerticalOptions="Start"
+                      HorizontalOptions="FillAndExpand"
+                      SeparatorVisibility="Default">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <Frame CornerRadius="20"  BackgroundColor="White" Margin="4,0,4,0" Padding="20" >
-                                    <StackLayout Orientation="Vertical" Spacing="0">
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                <Frame CornerRadius="20" BackgroundColor="White" Margin="4,0,4,0" Padding="27">
+                                    <StackLayout BackgroundColor="Transparent" Orientation="Vertical" Spacing="0">
+
+                                      
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="ID:" FontAttributes="Bold" FontSize="Large" />
@@ -28,35 +38,39 @@
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Mail:" />
-                                                    <Span Text="{ Binding billing.email }" FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="{ Binding billing.email }" FontAttributes="Bold"
+                                                          FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Date:" />
-                                                    <Span Text="{ Binding date_created }" FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="{ Binding date_created }" FontAttributes="Bold"
+                                                          FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Status:"/>
-                                                    <Span Text="{ Binding status }"  FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="Status:" />
+                                                    <Span Text="{ Binding status }" FontAttributes="Bold"
+                                                          FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Total:" />
-                                                    <Span Text="{ Binding total }" FontAttributes="Bold" FontSize="Medium" />
+
+                                                    <Span Text="{ Binding total, StringFormat='Total R:{0,5:#,0.00}' }"
+                                                          FontAttributes="Bold" FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
@@ -67,57 +81,70 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Text="ITEMS" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Title" FontAttributes="Bold"></Label>
-            <ListView x:Name="Lineorders"
-                      HasUnevenRows="True"   
+            <Label Text="ITEMS" TextColor="White" HeightRequest="30" HorizontalOptions="Center"
+                   VerticalOptions="Center" FontSize="Title" FontAttributes="Bold" />
+            <ListView BackgroundColor="Transparent"
+                      x:Name="Lineorders"
+                      HasUnevenRows="True"
                       VerticalOptions="FillAndExpand"
                       HorizontalOptions="FillAndExpand"
-                      SeparatorVisibility="Default"   >
+                      SeparatorVisibility="Default">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-                                <Frame CornerRadius="20" BackgroundColor="White" Margin="10" Padding="10">
+                                <Frame CornerRadius="20" BackgroundColor="White" Margin="10" Padding="20">
                                     <StackLayout
-                                         VerticalOptions="FillAndExpand"
+                                        Spacing="0"
+                                        BackgroundColor="Transparent"
+                                        VerticalOptions="FillAndExpand"
                                         HorizontalOptions="FillAndExpand">
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Product:" FontAttributes="Bold" FontSize="Large" />
-                                                    <Span Text="{ Binding name }" FontAttributes="Bold" FontSize="Large" />
+                                                 
+                                                    <Span Text="{ Binding name }" FontAttributes="Bold"
+                                                          FontSize="Large" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
-                                            <Label.FormattedText>
-                                                <FormattedString>
-                                                    <Span Text="Price:" />
-                                                    <Span Text="{ Binding price,StringFormat={}{0:0.####################}}" FontAttributes="Bold" FontSize="Medium" />
-                                                </FormattedString>
-                                            </Label.FormattedText>
-                                        </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                          <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Sku:" />
-                                                    <Span Text="{ Binding sku }" FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="{ Binding sku }" 
+                                                          FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
-                                                    <Span Text="Total:" />
-                                                    <Span Text="{ Binding total , StringFormat='Total R:{0,5:#,0.00}' }" FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="Price:" />
+                                                    <Span
+                                                        Text="{ Binding price }"
+                                                       FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>
-                                        <Label HorizontalTextAlignment="Center" TextColor="Black" >
+                                      
+                                       
+                                        <Label HorizontalTextAlignment="Center" TextColor="Black">
                                             <Label.FormattedText>
                                                 <FormattedString>
                                                     <Span Text="Quantity:" />
-                                                    <Span Text="{ Binding quantity }" FontAttributes="Bold" FontSize="Medium" />
+                                                    <Span Text="{ Binding quantity }" 
+                                                          FontSize="Medium" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                         <Label HorizontalTextAlignment="Center" TextColor="Black">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+
+                                                    <Span
+                                                        Text="{ Binding total , StringFormat='Total R:{0,5:#,0.00}' }"
+                                                        FontAttributes="Bold" FontSize="Medium" />
                                                 </FormattedString>
                                             </Label.FormattedText>
                                         </Label>

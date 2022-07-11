@@ -1,15 +1,13 @@
 ﻿using System;
-
+using System.Collections.Generic;
+using System.IO;
 using Android.App;
 using Android.OS;
 using Android.Runtime;
+using Microsoft.AppCenter.Crashes;
 using Plugin.CurrentActivity;
 using Plugin.FirebasePushNotification;
-using Android.Widget;
-using Firebase;
-using Plugin.FirebasePushNotification.Abstractions;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using Debug = System.Diagnostics.Debug;
 
 namespace Ecombeta.Droid
 {
@@ -18,42 +16,113 @@ namespace Ecombeta.Droid
     public class MainApplication : Application, Application.IActivityLifecycleCallbacks
     {
         public MainApplication(IntPtr handle, JniHandleOwnership transer)
-          : base(handle, transer)
+            : base(handle, transer)
+        {
+        }
+
+        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
+        {
+            try
+            {
+                CrossCurrentActivity.Current.Activity = activity;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public void OnActivityDestroyed(Activity activity)
+        {
+        }
+
+        public void OnActivityPaused(Activity activity)
+        {
+            try
+            {
+                CrossCurrentActivity.Current.Activity = activity;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public void OnActivityResumed(Activity activity)
+        {
+            try
+            {
+                CrossCurrentActivity.Current.Activity = activity;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
+        {
+        }
+
+        public void OnActivityStarted(Activity activity)
+        {
+            try
+            {
+                CrossCurrentActivity.Current.Activity = activity;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        public void OnActivityStopped(Activity activity)
         {
         }
 
         public override void OnCreate()
         {
-            base.OnCreate();
-            RegisterActivityLifecycleCallbacks(this);
-
-
-            //Set the default notification channel for your app when running Android Oreo
-            if (Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.O)
+            try
             {
-                //Change for your default notification channel id here
-                FirebasePushNotificationManager.DefaultNotificationChannelId = "DefaultChannel";
+                App.MakeWebRequest();
+                base.OnCreate();
+                RegisterActivityLifecycleCallbacks(this);
 
-                //Change for your default notification channel name here
-                FirebasePushNotificationManager.DefaultNotificationChannelName = "General";
+                if (App.IsConnected)
+                    //Set the default notification channel for your app when running Android Oreo
+                    if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+                    {
+                        //Change for your default notification channel id here
+                        FirebasePushNotificationManager.DefaultNotificationChannelId = "DefaultChannel";
+
+                        //Change for your default notification channel name here
+                        FirebasePushNotificationManager.DefaultNotificationChannelName = "General";
+                    }
+            }
+            catch (IOException ex)
+            {
+                Crashes.TrackError(ex);
             }
 
-
-            //If debug you should reset the token each time.
-#if DEBUG
-            FirebasePushNotificationManager.Initialize(this, new NotificationUserCategory[]
+            try
             {
-            new NotificationUserCategory("message",new List<NotificationUserAction> {
-                new NotificationUserAction("Reply","Reply",NotificationActionType.Foreground),
-                new NotificationUserAction("Forward","Forward",NotificationActionType.Foreground)
-
-            }),
-            new NotificationUserCategory("request",new List<NotificationUserAction> {
-                new NotificationUserAction("Accept","Accept",NotificationActionType.Default,"check"),
-                new NotificationUserAction("Reject","Reject",NotificationActionType.Default,"cancel")
-            })
-
-            }, true);
+                if (App.IsConnected)
+                {
+                    //If debug you should reset the token each time.
+#if DEBUG
+                    FirebasePushNotificationManager.Initialize(this, new[]
+                    {
+                        new NotificationUserCategory("message", new List<NotificationUserAction>
+                        {
+                            new NotificationUserAction("Reply", "Reply", NotificationActionType.Foreground),
+                            new NotificationUserAction("Forward", "Forward", NotificationActionType.Foreground)
+                        }),
+                        new NotificationUserCategory("request", new List<NotificationUserAction>
+                        {
+                            new NotificationUserAction("Accept", "Accept", NotificationActionType.Default, "check"),
+                            new NotificationUserAction("Reject", "Reject", NotificationActionType.Default, "cancel")
+                        })
+                    }, true);
 #else
 	            FirebasePushNotificationManager.Initialize(this,new NotificationUserCategory[]
 		    {
@@ -67,56 +136,32 @@ namespace Ecombeta.Droid
 			    new NotificationUserAction("Reject","Reject",NotificationActionType.Default,"cancel")
 			})
 
-		    },false);
+		    },true);
 #endif
 
-            CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+                    CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+                    {
+                        Debug.WriteLine("NOTIFICATION RECEIVED", p.Data);
+                    };
+                }
+            }
+            catch (IOException ex)
             {
-                System.Diagnostics.Debug.WriteLine("NOTIFICATION RECEIVED", p.Data);
-
-
-            };
-
-
-
+                Crashes.TrackError(ex);
+            }
         }
 
         public override void OnTerminate()
         {
-            base.OnTerminate();
-            UnregisterActivityLifecycleCallbacks(this);
-        }
-
-        public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
-        {
-            CrossCurrentActivity.Current.Activity = activity;
-        }
-
-        public void OnActivityDestroyed(Activity activity)
-        {
-        }
-
-        public void OnActivityPaused(Activity activity)
-        {
-            CrossCurrentActivity.Current.Activity = activity;
-        }
-
-        public void OnActivityResumed(Activity activity)
-        {
-            CrossCurrentActivity.Current.Activity = activity;
-        }
-
-        public void OnActivitySaveInstanceState(Activity activity, Bundle outState)
-        {
-        }
-
-        public void OnActivityStarted(Activity activity)
-        {
-            CrossCurrentActivity.Current.Activity = activity;
-        }
-
-        public void OnActivityStopped(Activity activity)
-        {
+            try
+            {
+                base.OnTerminate();
+                UnregisterActivityLifecycleCallbacks(this);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
     }
 }

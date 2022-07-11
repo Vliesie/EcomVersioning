@@ -1,102 +1,200 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.Diagnostics;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace Ecombeta.Models
 {
-
-    
-     public class Cartlist : System.ComponentModel.INotifyPropertyChanged
+    [DataContract]
+    public class CartList : INotifyPropertyChanged
     {
+        private bool _inStock;
 
-  
+        private bool _isVisible;
 
+        private int _selectedId;
+        private string _stockStatus;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public string Pname { get; set; }
+        private decimal _tPrice;
+        public string QuantityCheck { get; set; }
 
-       
-        public double StockQuantity { get; set; }
-      
-        public int PId { get; set; }
+        [DataMember] public string ProductName { get; set; }
 
-        public  double Pquantity { get; set; }
-
-        public int variation_id { get; set; }
-
-        private decimal totalprice;
-        public decimal Totalprice
+        public bool InStock
         {
-             get{ return totalprice; }
+            get => _inStock;
 
             set
             {
-                if (value.CompareTo(totalprice) != 0)
+                _inStock = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DataMember]
+        public string StockStatus
+        {
+            get => _stockStatus;
+
+            set
+            {
+                _stockStatus = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DataMember] public string CartAtribKey { get; set; }
+        [DataMember] public string CartAtribValue { get; set; }
+
+        [DataMember] public bool LimitedStock { get; set; }
+        [DataMember] public string CartAtribKey1 { get; set; }
+        [DataMember] public string CartAtribValue1 { get; set; }
+
+        [DataMember] public double StockQuantity { get; set; }
+
+        [DataMember] public int PId { get; set; }
+
+
+        private double _productQuantity;
+
+        [DataMember]
+        public double ProductQuantity
+        {
+            get => _productQuantity;
+
+            set
+            {
+                _productQuantity = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _ErrorMsg;
+
+        [DataMember]
+        public string ErrorMsg
+        {
+            get => _ErrorMsg;
+
+            set
+            {
+                _ErrorMsg = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        
+        [DataMember] public int VariationId { get; set; }
+
+        public int VariantParentId { get; set; }
+
+        [DataMember]
+        public decimal TotalDynamicPrice
+        {
+            get => _tPrice;
+
+            set
+            {
+                if (value.CompareTo(_tPrice) != 0)
                 {
-                    totalprice = value;
+                    _tPrice = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        public  string CheckforQuantity;
-        public decimal Price { get; set; }
-        public  string Imagesrc { get; set; }
+        public bool IsVisible
+        {
+            get => _isVisible;
 
-        public int IncrementQ { get; set; }
-        public  int MinQ { get; set; }
+            set
+            {
+                _isVisible = value;
+                NotifyPropertyChanged();
+            }
+        }
 
-        protected void NotifyPropertyChanged([System.Runtime.CompilerServices.CallerMemberName]string propertyName = null)
+        public int SelectedId
+        {
+            get => _selectedId;
+
+            set
+            {
+                _selectedId = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        [DataMember] public decimal Price { get; set; }
+
+        [DataMember] public string ImgSource { get; set; }
+
+        [DataMember] public int IncrementQ { get; set; }
+
+        [DataMember] public int MinQ { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
-    public class ItemList : INotifyPropertyChanged
+    public sealed class ItemList : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public ObservableCollection<Cartlist> _items;
+        private ObservableCollection<CartList> _items;
 
-        public ObservableCollection<Cartlist> Items
+
+
+        public ItemList(List<CartList> itemList)
         {
-            get { return _items; }
-            set { _items = value; OnPropertyChanged("Items"); }
+            Items = new ObservableCollection<CartList>();
+            if (itemList == null) return;
+            foreach (var itm in itemList)
+                Items.Add(itm);
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        public ObservableCollection<CartList> Items
         {
-            if (PropertyChanged == null)
-                return;
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public ItemList(List<Cartlist> itemList)
-        {
-
-            Items = new ObservableCollection<Cartlist>();
-            if (itemList != null)
+            get => _items;
+            private set
             {
-                foreach (Cartlist itm in itemList)
-                {
-                    Items.Add(itm);
-                }
+                _items = value;
+                OnPropertyChanged("Items");
             }
-          
+        }
+
+
+
+        private bool _selected;
+        public bool IsSelected
+        {
+            get => _selected;
+
+            set
+            {
+                _selected = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
-    public class FullCart
+    public static class FullCart
     {
-        
-                                       
-        public static List<Cartlist> Cartlistz;
-
-       
+        public static List<CartList> CartList { get; set; }
     }
-
-
 }

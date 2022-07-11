@@ -1,23 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Ecombeta.Models
 {
-    class Productz
+    internal class Productz
     {
         public Productimport[] products { get; set; }
-        
     }
 
-    
 
     public class Productimport
     {
-
         public string title { get; set; }
         public int id { get; set; }
         public DateTime created_at { get; set; }
@@ -168,5 +160,4 @@ namespace Ecombeta.Models
         public string slug { get; set; }
         public string option { get; set; }
     }
-
 }

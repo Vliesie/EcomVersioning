@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage x:Name="helppage" xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Ecombeta.Views.HelpPage">
+      <ContentPage.Content>
+          <StackLayout>
+          
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+          
+               
+                    <ScrollView Padding="20" x:Name="HelpScroll" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                       <Label HorizontalTextAlignment="Start" FontSize="Small" TextColor="Black" FontFamily="Arial" x:Name="HelpText"></Label>
+                    </ScrollView>
+             
+            </StackLayout>
+              </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

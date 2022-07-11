@@ -1,257 +1,556 @@
-﻿using Ecombeta.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
-using WooCommerceNET.WooCommerce.v3;
-using WooCommerceNET.WooCommerce.v3.Extension;
+using Ecombeta.Models;
+using Ecombeta.Services;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
+using Rg.Plugins.Popup.Extensions;
+using Rg.Plugins.Popup.Services;
 using WooCommerceNET;
+using WooCommerceNET.WooCommerce.v2;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using WooCommerceNET.WooCommerce.v2;
-using System.Collections.ObjectModel;
+using Product = WooCommerceNET.WooCommerce.v3.Product;
+using Variation = WooCommerceNET.WooCommerce.v3.Variation;
 
 namespace Ecombeta.Views
 {
+
+    public partial class ProductReports {
+        public string ProductName { get; set; }
+        public string StockQuantity { get; set; }
+    }
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Cart : ContentPage
+    public partial class Cart : ContentPage, INotifyPropertyChanged
     {
-        List<OrderLineItem> Lineitems;
-        List<Cartlist> z;
-        ItemList items;
-        bool NoMore;
-        List<String> Productname;
-        public int currentID;
+
+        public WooCommerceNET.WooCommerce.v3.WCObject wcV3;
+
+        public WooCommerceNET.WooCommerce.v2.WCObject wcV2;
+
+        private readonly List<CartList> _simpleCartlist;
+        private int _currentId;
+        private int _currentListItem;
+        private ItemList _items;
+        private List<OrderLineItem> _orderlineitems;
+        private bool _productBoughtOut;
+        private List<string> _productnames;
+        private Product _singleProduct;
+        private bool _spamClick;
+        private Variation _varProduct;
+        public List<ProductReports> proReport;
+
+        public Order order;
+        private bool _loading;
+
+        public bool loading
+        {
+            get => _loading;
+            set
+            {
+                if (_loading == value) return;
+                _loading = value;
+                RaisePropertyChanged();
+
+            }
+        }
+
+
+        private bool _running;
+
+        public bool running
+        {
+            get => _running;
+            set
+            {
+                if (_running == value) return;
+                _running = value;
+                RaisePropertyChanged();
+
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+        private void RaisePropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            try
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
 
         public Cart()
         {
-            //TO DO add max stock Q for the cart
-            InitializeComponent();
-
-            Backgroundimage.BackgroundImageSource = "https://mm-app.co.za/wp-content/uploads/2019/12/OrangeBluepoly.jpg";
-            var x = FullCart.Cartlistz;
-            z = x;
-            if (x == null)
+            try
             {
-                NavigationPage.SetHasBackButton(this, false);
-                Navigation.PushAsync(new CartEmprty());
+                var x = FullCart.CartList;
+                //TO DO add max stock Q for the cart
+                InitializeComponent();
+                if (x?.Any() != true || x.Any() != true || !x.Any())
+                {
+                    var CartP = new CartPersistance();
+                    var fetchedCart = Preferences.Get("Cart", "def2ault_value");
+                    CartP.DePersist(fetchedCart);
+                    _items = new ItemList(FullCart.CartList);
+                    cartView.ItemsSource = _items.Items;
+                 
+                    _simpleCartlist = FullCart.CartList;
+                    if (!fetchedCart.Any())
+                    {
+                        NavigationPage.SetHasBackButton(this, false);
+                        Navigation.PushAsync(new CartEmprty());
+                    }
+                }
+                else
+                {
+                    var fetchedCart = Preferences.Get("Cart", "default_value");
+                    FullCart.CartList = JsonConvert.DeserializeObject<List<CartList>>(fetchedCart);
+                    //var y = JsonConvert.DeserializeObject<List<CartList>>(fetchedCart);
+                    //_items = new ItemList(y);
+                    _items = new ItemList(FullCart.CartList);
+                    cartView.ItemsSource = _items.Items;
+                
+                  
+                    _simpleCartlist = FullCart.CartList;
+                }
+                Init();
             }
-            items = new ItemList(FullCart.Cartlistz);
-            cartView.ItemsSource = items.Items; 
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
+
+        private async Task Init()
+        {
+            wcV3 = new WooCommerceNET.WooCommerce.v3.WCObject(GlobalVariable.Init.rest);
+            RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v2/",
+           "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
+            wcV2 = new WCObject(rest);
+            _spamClick = false;
+           // Backgroundimage.BackgroundImageSource =
+                //"https://mm-app.co.za/wp-content/uploads/2019/12/OrangeBluepoly.jpg";
+        }
+
         private void Pricevalue_Clicked(object sender, EventArgs e)
         {
-
         }
+
         private void EvetClicked(object s, SelectedItemChangedEventArgs e)
         {
-            var obj = (Cartlist)e.SelectedItem;
-            var ide = Convert.ToInt32(obj.PId);
-
-            foreach (var item in z)
+            try
             {
-                if (ide == item.PId)
-                {
-                    currentID = item.PId;
-                }
-            }
-        }  
-         private void Removevalue_Clicked(object sender, EventArgs e)
-         {
-            int check;
-            var btn = (ImageButton)sender;
-            var item = btn.BindingContext;
-            check = Convert.ToInt32(item);
-          
-            Cartlist listitem = (from itm in items.Items where itm.PId == check select itm).FirstOrDefault<Cartlist>();
-            items.Items.Remove(listitem);
-            Cartlist xf = (from itm in FullCart.Cartlistz where itm.PId == check select itm).FirstOrDefault<Cartlist>();
-            FullCart.Cartlistz.Remove(xf);
+                var obj = (CartList) e.SelectedItem;
+                var ide = Convert.ToInt32(obj.PId);
 
-          
+                foreach (var item in _items.Items)
+                    if (ide == item.PId)
+                    {
+                        _currentId = item.PId;
+                        item.TotalDynamicPrice = item.Price * Convert.ToDecimal(item.ProductQuantity);
+                    }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
-            
+
+
+        private void Removevalue_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                int check;
+                var btn = (ImageButton) sender;
+                var item = btn.BindingContext;
+                check = Convert.ToInt32(item);
+
+                var listitem = (from itm in _items.Items where itm.PId == check select itm).FirstOrDefault();
+                _items.Items.Remove(listitem);
+                var xf = (from itm in FullCart.CartList where itm.PId == check select itm).FirstOrDefault();
+                FullCart.CartList.Remove(xf);
+                cartView.BeginRefresh();
+
+                cartView.EndRefresh();
+                 var jsonStringz = JsonConvert.SerializeObject(FullCart.CartList);
+
+                Preferences.Set("Cart", jsonStringz);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
         private void stepper_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            foreach (var listitem in z)
+            try
             {
-                if (currentID == listitem.PId)
-                {
-                    listitem.Totalprice = listitem.Price * Convert.ToDecimal(listitem.Pquantity);
-                }
+                int check;
+                int varcheck;
+                int idcheck;
+                var btn = (Stepper)sender;
+                var Quan = btn.Value;
+
+                var varid = btn.TabIndex;
+                var id = btn.ClassId;
+                idcheck = Convert.ToInt32(id);
+                check = Convert.ToInt32(Quan);
+                varcheck = varid;
+
+                foreach (var listitem in _items.Items)
+                    if (varid != 0)
+                    {
+                        if (varcheck == listitem.VariationId)
+                        {
+                            if (listitem.IncrementQ == 0 || listitem.IncrementQ.ToString() == "") listitem.IncrementQ = 1;
+                            listitem.TotalDynamicPrice = listitem.Price * Convert.ToDecimal(listitem.ProductQuantity);
+                            if (check != 0)
+                            {
+                                listitem.ProductQuantity = check;
+
+                                var jsonStringz = JsonConvert.SerializeObject(FullCart.CartList);
+
+                                Preferences.Set("Cart", jsonStringz);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (idcheck == listitem.PId)
+                        {
+                            if (listitem.IncrementQ == 0 || listitem.IncrementQ.ToString() == "") listitem.IncrementQ = 1;
+                            listitem.TotalDynamicPrice = listitem.Price * Convert.ToDecimal(listitem.ProductQuantity);
+                            if (check != 0)
+                            {
+                                listitem.ProductQuantity = check;
+
+                                var jsonStringz = JsonConvert.SerializeObject(FullCart.CartList);
+
+                                Preferences.Set("Cart", jsonStringz);
+                            }
+                        }
+                    } 
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
         }
 
         private void UpdatePrice_Clicked(object sender, EventArgs e)
         {
-            int check;
-            var btn = (Button)sender;
-            var a = btn.BindingContext;
-            check = Convert.ToInt32(a);
-
-            foreach (var item in z)
+            try
             {
-                if (check == item.PId)
-                {
-                    item.Totalprice = item.Price * Convert.ToDecimal(item.Pquantity);
-                }
+                int check;
+                var btn = (Button) sender;
+                var a = btn.BindingContext;
+
+                check = Convert.ToInt32(a);
+
+                foreach (var item in _simpleCartlist)
+                    if (check == item.PId)
+                        item.TotalDynamicPrice = item.Price * Convert.ToDecimal(item.ProductQuantity);
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
         }
-
-        private async void ImageButton_Clicked(object sender, EventArgs e)
+      
+        private async void CheckoutButton_Clicked(object sender, EventArgs e)
         {
-
-            //You cant checkout if your not logged in There are no Guest Checkouts(I can But would rather not)
-          if (Users.Loggedin == true)
-          {
-
-            if (Lineitems == null)
+            try
             {
-                Lineitems = new List<OrderLineItem>();
-            }
-
-            RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v2/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
-            WooCommerceNET.WooCommerce.v2.WCObject wc = new WooCommerceNET.WooCommerce.v2.WCObject(rest);
-            Check();
-            var order = new WooCommerceNET.WooCommerce.v2.Order() { status = "on-hold", customer_id = Users.CId };
-            foreach (var item in z)
-            {
-                var a = Convert.ToInt32(item.Pquantity);
-                if (item.variation_id <= 0)
+   
+                if (FullCart.CartList == null || !FullCart.CartList.Any())
                 {
-                    item.variation_id = item.PId;
-                }
-
-                if (item.StockQuantity == 0)
-                {
-                    NoMore = true;
-                    Productname.Add(item.Pname);
-                }
-                order.line_items = order.line_items ?? new List<OrderLineItem>();
-                order.line_items.Add(new OrderLineItem() { product_id = item.PId, variation_id = item.variation_id, quantity = a });
-            }
-
-                if (NoMore)
-                {
-                    var yx = await DisplayAlert("Order Cant be Placed", $"Not enough stock for {Productname}", "Back to Cart", "Home");
+                    var yx = await DisplayAlert("Whoops",
+                                "Cart seem's to be empty, We cant checkout nothing", "Back to Cart", "Supplier");
                     if (yx)
                     {
+                        return;
+                    }
+                    else
+                    {
+                        var masterDetailPage = new Home();
+                        masterDetailPage.Detail = new NavigationPage(new Suppliers());
+                        Application.Current.MainPage = masterDetailPage;
+                    }
+                    return;
+                }
 
-                    }
-                    else
-                    {
-                        await Navigation.PushAsync(new Home("Mica Market"));
-                    }
-                }
-                else
-                {
-                    if (items != null)
-                    {
-                        await wc.Order.Add(order);
-                      
-                        var masterDetailPage = new Home("");
-                        masterDetailPage.Detail = new NavigationPage(new Checkedout());
-                        Application.Current.MainPage = masterDetailPage;
-                    }
-                    else
-                    {
-                        var masterDetailPage = new Home("");
-                        masterDetailPage.Detail = new NavigationPage(new CartEmprty());
-                        Application.Current.MainPage = masterDetailPage;
-                  
-                    }
-                }
-                   
-          }
-          else
-          {
-                var y =  await DisplayAlert("Woops", "Please Login to check Out", "Login", "Home");
-                if (y)
-                {
-                    
-                    var masterDetailPage = new Home("");
-                    masterDetailPage.Detail = new NavigationPage(new Login());
-                    Application.Current.MainPage = masterDetailPage;
-                }
-                else
-                {
-                    await Navigation.PushAsync(new Home("Mica Market"));
-                }
+                await Navigation.PushPopupAsync(new LoadingPopup());
+
+                await BeginCheckout();
+
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
         }
 
-        //Checks for stock quantity for variable's and singles incase theres no more stocks left this needs IMMENSE testing.
-        public async void Check()
+        private async Task BeginCheckout()
         {
-            RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
-            WooCommerceNET.WooCommerce.v3.WCObject wc = new WooCommerceNET.WooCommerce.v3.WCObject(rest);
-            foreach (var item in z)
+            try
             {
-                var a = await wc.Product.Get(item.PId);
-                //Variable
-                var y = await wc.Product.Variations.GetAll(item.PId);
 
-                if (a.variations == null)
+             
+                if (_spamClick)
                 {
-                    if (item.StockQuantity == Convert.ToInt32(a.stock_quantity))
-                    {
-                        if (a.stock_quantity == 0 || item.Pquantity > a.stock_quantity)
-                        {
-                            var yx = await DisplayAlert("Not Enough Products", $"There is this much Stock left:{a.stock_quantity}for{a.name}", "Back to Cart", "Keep Shopping");
-                            if (yx)
-                            {
-                                item.StockQuantity = Convert.ToInt32(a.stock_quantity);
-                                items = new ItemList(FullCart.Cartlistz);
-                                cartView.ItemsSource = items.Items;
-                            }
-                            else
-                            {
-                                await Navigation.PushAsync(new Home("Mica Market"));
-                            }
-                        }
-                    } //Is Single
+                    await DisplayAlert("Woops", "Your trying to order twice", "Ok");
+                    return;
                 }
-                if (Orders.isUnlimted)
+
+                if (!Users.LoggedIn)
                 {
-                  var x = item.StockQuantity - 1;
-                    item.StockQuantity = x;
+                       
+                    await DisplayAlert("Woops", "Please Login to check Out", "Login", "Home");
+                    return;
                 }
-                else
+
+                // this is okay
+                if (_orderlineitems == null) { _orderlineitems = new List<OrderLineItem>(); }
+
+                foreach (var cartItem in _simpleCartlist)
                 {
-                    foreach (var itemz in y)
+                    if (cartItem.LimitedStock)
                     {
-                        if (itemz.stock_quantity == 0 || item.Pquantity > itemz.stock_quantity)
-                        {
-                            var yx = await DisplayAlert("Not Enough Products", $"There is this much Stock left:{a.stock_quantity}for{itemz.id}", "Back to Cart", "Home");
-                            if (yx)
-                            {
-                                item.StockQuantity = Convert.ToInt32(itemz.stock_quantity);
-                                items = new ItemList(FullCart.Cartlistz);
-                                cartView.ItemsSource = items.Items;
-                            }
-                            else
-                            {
-                                await Navigation.PushAsync(new Home("Mica Market"));
-                            }
-                        }
-                        if (Orders.isUnlimted)
-                        {
-                            var x = itemz.stock_quantity - 1;
-                            itemz.stock_quantity = x;
-                        }
+                        await IsInStock();
+                    }
+                    else
+                    {
+                        cartItem.InStock = true;
+                    
                     }
                 }
+                order = new Order { status = "on-hold", customer_id = Users.CId };
+                foreach (var item in _simpleCartlist)
+                {
+                    //if out of stock
+                    if (item.StockStatus != "instock" || item.InStock == false) {
+                        proReport = new List<ProductReports>();
+                       proReport.Add(new ProductReports
+                       {
+                            ProductName = item.ProductName,
+                            StockQuantity = item.StockQuantity.ToString()
+                        });
+                        continue;
+                    } // skip this and go to the next item
+
+               
+                    if (item.VariationId <= 0) item.VariationId = item.PId;
+                    if (item.StockQuantity == 0)
+                    {
+                        _productBoughtOut = true;
+                        _productnames.Add(item.ProductName);
+                    }
+                    double quantity = item.ProductQuantity;
+                    order.line_items = order.line_items ?? new List<OrderLineItem>();
+                    order.line_items.Add(new OrderLineItem
+                    { product_id = item.PId, variation_id = item.VariationId, quantity = Convert.ToDecimal(quantity) });
+                }
+
+                foreach (var Cartitem in _simpleCartlist)
+                {
+                    if (!Cartitem.InStock)
+                    {
+                        await Failed();
+                        return;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }await Succeed();
+
+             
+
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+
+        private async Task Succeed()
+        {
+            _spamClick = true;
+             wcV2.Order.Add(order);
+           Preferences.Clear("Cart");
+           Preferences.Remove("Cart");
+           _simpleCartlist.Clear();
+            FullCart.CartList.Clear();
+            _items.Items.Clear();
+             
+            await Navigation.PopPopupAsync();
+            await DisplayAlert("Success", $"Order has been Placed, Thank you!", "Ok");
+        }
+
+        private async Task Failed()
+        {
+            await Navigation.PopPopupAsync();
+            await Navigation.PushPopupAsync(new ProductReport(proReport));
+            proReport.Clear();
+        }
+
+        protected async override void OnAppearing()
+        {
+
+         
+        }
+
+        private async Task IsInStock()
+        {
+            if (_simpleCartlist.Any())
+            {
+                foreach (var CartItem in _simpleCartlist)
+                {
+                    if (CartItem.VariantParentId == 0)
+                    {
+                        _singleProduct = await wcV3.Product.Get(CartItem.PId);
+                        await SingleCheck(CartItem.PId);
+                    }
+                    else
+                    {
+                        _varProduct = await wcV3.Product.Variations.Get(CartItem.VariationId, CartItem.VariantParentId);
+                        await VariableCheck(CartItem.PId);
+                    }
+                }
+
+            }
+
+        }
+
+
+        private async Task SingleCheck(int id)
+        {
+            try
+            {
+           
+                foreach (var CartItem in _simpleCartlist)
+                {
+                    if (id == CartItem.PId)
+                    {
+                        if (_singleProduct.stock_quantity == null)
+                        {
+                            //CartItem.InStock = true;
+                            _singleProduct.stock_quantity = 999999;
+                            CartItem.InStock = true;
+                            continue;
+                        }
+                        if (CartItem.ProductQuantity == 0)
+                        {
+                            CartItem.ErrorMsg = "Item requires a Quantity of atleast 1" + System.Environment.NewLine + "Quantity Cannot be 0!";
+                            continue;
+                        }
+                        if (_singleProduct.stock_quantity == 0 || _singleProduct.stock_status == "outofstock" ||
+                            CartItem.ProductQuantity > _singleProduct.stock_quantity)
+                        {
+
+                          
+                            CartItem.ErrorMsg = "Product shortage " + $" There is this much Stock left: {_singleProduct.stock_quantity} for {_singleProduct.name}";
+
+                            CartItem.InStock = false;
+                            CartItem.StockQuantity = Convert.ToInt32(_singleProduct.stock_quantity);
+                            _items = new ItemList(FullCart.CartList);
+                            CartItem.StockStatus = _singleProduct.stock_status;
+                            continue;
+                        }
+                        CartItem.ErrorMsg = "";
+                        CartItem.InStock = true;
+                    }
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+        private async Task VariableCheck(int id)
+        {
+            try
+            {
+                foreach (var CartItem in _simpleCartlist)
+                {
+                    if (id == CartItem.PId)
+                    {
+                        if (_varProduct.stock_quantity == null)
+                        {
+                            _varProduct.stock_quantity = 999999;
+                        }
+                        if (CartItem.ProductQuantity == 0)
+                        {
+                            CartItem.ErrorMsg = "Item requires a Quantity of atleast 1" + System.Environment.NewLine + "Quantity Cannot be 0!";
+                            continue;
+                        }
+                        if (_varProduct.stock_quantity == 0 || _varProduct.stock_status == "outofstock" ||
+                            CartItem.ProductQuantity > _varProduct.stock_quantity)
+                        {
+                            CartItem.InStock = false;
+                            CartItem.StockQuantity = Convert.ToInt32(_varProduct.stock_quantity);
+                            _items = new ItemList(FullCart.CartList);
+                            cartView.BeginRefresh();
+                            CartItem.StockStatus = _varProduct.stock_status;
+                            cartView.EndRefresh();
+                            continue;
+                        }
+                        CartItem.ErrorMsg = "";
+                        CartItem.InStock = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
             }
         }
 
         //Checkout Button 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            var masterDetailPage = new Home("");
-
-            masterDetailPage.Detail = new NavigationPage(new Suppliers());
-            Application.Current.MainPage = masterDetailPage;
+            try
+            {
+                var masterDetailPage = new Home();
+                masterDetailPage.Detail = new NavigationPage(new Suppliers());
+                Application.Current.MainPage = masterDetailPage;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
+
+        private void Button_Clicked_1(object sender, EventArgs e)
+        {
+            Preferences.Remove("Cart");
+            Preferences.Clear("Cart");
+        }
+
+        
     }
 }

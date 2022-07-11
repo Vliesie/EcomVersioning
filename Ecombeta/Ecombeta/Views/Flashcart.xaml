@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Name="Backgroundimage"
+             xmlns:o="clr-namespace:Octane.Xamarin.Forms.VideoPlayer;assembly=Octane.Xamarin.Forms.VideoPlayer"
+             Title="Flash Cart"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Ecombeta.Views.Flashcart">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout
+                x:Name="LoadingOverlay"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black" Opacity="0.5">
+                <ActivityIndicator
+                    x:Name="TaskLoader"
+                    IsRunning="False"
+                    Scale="4"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="White" />
+            </StackLayout>
+            <StackLayout Padding="5" AbsoluteLayout.LayoutBounds="0,0,1,1"
+                         AbsoluteLayout.LayoutFlags="All" Margin="15" BackgroundColor="White">
+
+                <ListView x:Name="cartView"
+                          HasUnevenRows="True"
+
+                          VerticalOptions="FillAndExpand"
+                          HorizontalOptions="FillAndExpand"
+                          SeparatorVisibility="None"
+                          ItemSelected="EvetClicked">
+                    <ListView.Header>
+                        <StackLayout Padding="10,5,0,5">
+                            <Label Text="Cart" TextColor="Black" HorizontalOptions="Center" FontAttributes="Bold"
+                                   FontSize="Title" />
+                        </StackLayout>
+                    </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label TextColor="Black" x:Name="something" HorizontalOptions="CenterAndExpand"
+                                               Text="{Binding ProductName}" FontSize="Title" FontAttributes="Bold" />
+                                        <ffimageloading:CachedImage
+                                            HeightRequest="150"
+                                            WidthRequest="150"
+                                            HorizontalOptions="CenterAndExpand"
+                                            VerticalOptions="CenterAndExpand"
+                                            DownsampleToViewSize="true"
+                                            Source="{Binding ImgSource}" />
+                                        <!--<Label HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Text="{Binding PId, StringFormat='SKU {0:F0}'}" FontSize="Medium"></Label> -->
+                                        <Label FontSize="Large" VerticalOptions="CenterAndExpand"
+                                               HorizontalOptions="CenterAndExpand"
+                                               Text="{Binding TotalPrice, StringFormat='Total R:{0,5:#,0.00}' }"
+                                               FontAttributes="Bold" TextColor="Black" />
+                                        <Label HorizontalOptions="CenterAndExpand" FontAttributes="Bold"
+                                               Text="{Binding Source={x:Reference stepper}, Path=Value, StringFormat='Quantity {0:F0}'}"
+                                               FontSize="Medium" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <ImageButton HorizontalOptions="Center" VerticalOptions="Center"
+                                                         HeightRequest="30" WidthRequest="30"
+                                                         Source="https://mm-app.co.za/wp-content/uploads/2020/01/icons8-remove-64.png"
+                                                         BindingContext="{Binding PId}" Clicked="Removevalue_Clicked" />
+                                            <Stepper x:Name="stepper" Maximum="{Binding StockQuantity}"
+                                                     Value="{Binding ProductQuantity}"
+                                                     Minimum="{Binding MinQ}"
+                                                     ClassId="{Binding PId}"
+                                                     TabIndex="{Binding VariationId}"
+                                                     HorizontalOptions="CenterAndExpand"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     Increment="{Binding IncrementQ}"
+                                                     ValueChanged="stepper_ValueChanged" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout Padding="0" Orientation="Horizontal" BackgroundColor="White">
+                    <Button Margin="2"  TextColor="white" BorderColor="#0088d3" BackgroundColor="#0088d3"
+                            CornerRadius="10" Padding="10" VerticalOptions="CenterAndExpand"
+                            HorizontalOptions="CenterAndExpand" Text="Buy Now!" Clicked="ImageButton_Clicked" />
+                </StackLayout>
+            </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

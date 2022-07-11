@@ -6,79 +6,76 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Auth0.AuthenticationApi" Version="6.5.4" />
-    <PackageReference Include="Auth0.Core" Version="6.5.4" />
-    <PackageReference Include="Auth0.OidcClient.Core" Version="3.1.0" />
+    <PackageReference Include="Auth0.AuthenticationApi" Version="7.0.9" />
+    <PackageReference Include="Auth0.Core" Version="7.0.9" />
+    <PackageReference Include="Auth0.OidcClient.Core" Version="3.1.2" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
-    <PackageReference Include="FirebaseDatabase.net" Version="4.0.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="FirebaseDatabase.net" Version="4.0.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Octane.Xam.VideoPlayer" Version="3.1.0" />
-    <PackageReference Include="Plugin.FirebasePushNotification" Version="2.3.6" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.3.0.34" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.34" />
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.3.0.34" />
+    <PackageReference Include="Plugin.FirebasePushNotification" Version="3.4.25" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="Toasts.Forms.Plugin" Version="3.3.2" />
-    <PackageReference Include="WooCommerceNET" Version="0.8.0" />
-    <PackageReference Include="WordPressPCL" Version="1.6.2" />
+    <PackageReference Include="WooCommerceNET" Version="0.8.2" />
+    <PackageReference Include="WordPressPCL" Version="1.7.1" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2478" />  
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.3" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.4.0" />
+    <PackageReference Include="Microsoft.AppCenter" Version="3.4.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.4.0" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.3" />
+    <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
+    <PackageReference Include="CarouselView.FormsPlugin.Fix" Version="5.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="Mono.Android">
       <HintPath>D:\Dev\Visual Studio\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v9.0\Mono.Android.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Xamarin.iOS">
+      <HintPath>..\..\..\..\..\..\..\..\..\Library\Frameworks\Xamarin.iOS.framework\Versions\13.10.0.17\lib\mono\Xamarin.iOS\Xamarin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\12.3.0.3\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v10.0\Mono.Android.dll</HintPath>
     </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\Attendees.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Cart.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\CartEmprty.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Checkedout.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    <EmbeddedResource Remove="Views\Orders.xaml" />
+    <EmbeddedResource Remove="Renderers\**" />
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Update="Views\FlashSale%27s.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\itinerary.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Login.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Home.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\OrderList.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Orders.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\SignUpPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\SingleOrder.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Suppliers.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml </Generator>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Renderers\" />
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\Flashcart.cs" />
+    <Compile Remove="Views\Orders.xaml.cs" />
+    <Compile Remove="Renderers\**" />
+    <Compile Remove="Views\Notifications.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\FlashSales.xaml.cs">
+      <DependentUpon>FlashSales.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\NotificationsPlugin.xaml.cs">
+      <DependentUpon>NotificationsPlugin.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TestingConnection.xaml.cs">
+      <DependentUpon>TestingConnection.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Renderers\**" />
+    <None Remove="Mono.Android" />
   </ItemGroup>
 </Project>

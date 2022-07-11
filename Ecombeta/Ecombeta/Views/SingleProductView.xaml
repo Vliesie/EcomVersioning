@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+
+
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="Ecombeta.Views.SingleProductView"
+             Title="Individual Products"
+             x:Name="Pageback">
+
+    <ContentPage.Content>
+         <Grid      VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+            <StackLayout
+                x:Name="LoadingOverlay"
+                IsVisible="False"
+            
+                BackgroundColor="Black" Opacity="0.5">
+                <ActivityIndicator
+                    x:Name="TaskLoader"
+                    IsRunning="False"
+                    Scale="3"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="White" />
+   
+         </StackLayout>
+        <StackLayout   VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+
+            <ListView x:Name="variablelistview"
+                      HasUnevenRows="true"
+                       SeparatorVisibility="Default"
+                      
+                       VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+                <!-- HasUnevenRows="True"  -->
+                <!-- SeparatorVisibility="None"  -->
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+
+                                <StackLayout
+                                         Padding="5"  
+                                    BackgroundColor="White"
+                                        VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+                                    <Grid>
+                                        <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                                                    HeightRequest="200"
+                                                                    WidthRequest="200"
+                                                                    DownsampleToViewSize="true"
+                                                                    Source="{Binding images[0].src}" />
+                                        <ffimageloading:CachedImage HorizontalOptions="Center" VerticalOptions="Center"
+                                                                    HeightRequest="200"
+                                                                    WidthRequest="200"
+                                                                    DownsampleToViewSize="true"
+                                                                    Source="{Binding image.src}" />
+                                    </Grid>
+                                    <Label HorizontalTextAlignment="Center" TextColor="Black" x:Name="something"
+                                           Text="{Binding name}" FontSize="Title" FontAttributes="Bold" />
+                                    <Label FontSize="Medium" HorizontalTextAlignment="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Regular Price" TextColor="Black"> </Span>
+                                                <Span Text="{Binding regular_price, StringFormat=' R {0:F0} ea'}"
+                                                      TextDecorations="Strikethrough" TextColor="Black" />
+                                                <Span Text="{Binding sale_price, StringFormat='  On Sale: {0:C}'}"
+                                                      TextColor="#77a464" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+
+                                    <Label IsVisible="{Binding _virtual}" HorizontalTextAlignment="Center"
+                                           TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding attributes[0].name }" FontAttributes="Bold" />
+                                                <Span Text="{Binding attributes[0].option , StringFormat=': {0}' }"
+                                                      FontSize="Small" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label IsVisible="{Binding _virtual}" HorizontalTextAlignment="Center"
+                                           TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding attributes[1].name }" FontAttributes="Bold" />
+                                                <Span Text="{ Binding attributes[1].option[0], StringFormat=': {0}'}"
+                                                      FontSize="Small" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label IsVisible="{Binding downloadable}" HorizontalTextAlignment="Center"
+                                           TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding attributes[0].name }" FontAttributes="Bold" />
+                                                <Span Text="{Binding attributes[0].options[0] , StringFormat=': {0}' }"
+                                                      FontSize="Small" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    <Label IsVisible="{Binding downloadable}" HorizontalTextAlignment="Center"
+                                           TextColor="Black">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding attributes[1].name }" FontAttributes="Bold" />
+                                                <Span Text="{ Binding attributes[1].options[0], StringFormat=': {0}'}"
+                                                      FontSize="Small" />
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Label HorizontalTextAlignment="Center" Text="{Binding stock_status}"
+                                           TextColor="Black" FontAttributes="Bold" FontSize="Large" />
+                                    <ScrollView Orientation="Vertical">
+                                        <Label Text="{Binding description }" TextType="Text" FontSize="Small"
+                                               RelativeLayout.HeightConstraint="60" HorizontalTextAlignment="Center" />
+                                    </ScrollView>
+                                    <Label HorizontalTextAlignment="Center"
+                                           Text="{Binding sku, StringFormat='SKU {0:F0}'}" FontSize="Medium" />
+
+                                    <Label HorizontalTextAlignment="Center" TextColor="Black"
+                                           Text="{Binding Source={x:Reference stepper}, Path=Value, StringFormat='Quantity: {0:F0}'}"
+                                           FontAttributes="Bold" FontSize="Medium" />
+
+                                    <Stepper x:Name="stepper" Maximum="{Binding stock_quantity}"
+                                             Value="{Binding productQuantity}"
+                                             Minimum="{Binding download_expiry}"
+                                             Increment="{Binding download_limit}"
+                                             HorizontalOptions="Center"
+
+                                             ValueChanged="StepperValueChanged" />
+                                    <Button IsVisible="{Binding _virtual}" BorderColor="#0088d3"
+                                            BackgroundColor="#0088d3"   CornerRadius="10" Padding="10" TextColor="White"
+                                            x:Name="Pricevalue" HorizontalOptions="Center" VerticalOptions="Center"
+                                            BindingContext="{Binding id}" Text="Add To Cart" Clicked="AddtoCart" />
+                                </StackLayout>
+
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+         </StackLayout>
+             </Grid>
+    </ContentPage.Content>
+</ContentPage>

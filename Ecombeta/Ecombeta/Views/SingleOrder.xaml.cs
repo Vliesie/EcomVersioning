@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WooCommerceNET;
-using WooCommerceNET.WooCommerce.v3;
+using Ecombeta.Models;
+using Microsoft.AppCenter.Crashes;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,24 +10,47 @@ namespace Ecombeta.Views
     public partial class SingleOrder : ContentPage
     {
         public static int PassOid;
+
         public SingleOrder()
         {
             InitializeComponent();
-            
-            Backimage.BackgroundImageSource = "https://mm-app.co.za/wp-content/uploads/2019/12/Bluepoly.jpg";
-            Init();
+            try
+            {
+                Backimage.BackgroundImageSource = "https://mm-app.co.za/wp-content/uploads/2019/12/Bluepoly.jpg";
+                Init();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
 
-        public async void Init()
+        private async void Init()
         {
-            RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
-            WCObject wc = new WCObject(rest);
+            try
+            {
+                var wc = new WooCommerceNET.WooCommerce.v3.WCObject(GlobalVariable.Init.rest);
+                var p = await wc.Order.Get(PassOid);
+                SingleOrderList.ItemsSource = new[] {p};
 
-            var p = await wc.Order.Get(PassOid);
+                Lineorders.ItemsSource = p.line_items;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+        protected async override void OnAppearing()
+        {
+            App.MakeWebRequest();
+            if (App.IsConnected)
+            {
 
-            SingleOrderList.ItemsSource = new Order[1] { p };
-
-            Lineorders.ItemsSource = p.line_items;
+            }
+            else
+            {
+                await Navigation.PushAsync(new NoInternet());
+            }
         }
     }
 }

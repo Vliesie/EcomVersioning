@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using WooCommerceNET.WooCommerce.v3;
-using WooCommerceNET.WooCommerce.v3.Extension;
-using WooCommerceNET;
 
 namespace Ecombeta.Models
 {
-   public class FetchCustomers
+    public static class FetchCustomers
     {
-        public static List<Customer> customers;
+        public static List<Customer> Customers;
     }
 }

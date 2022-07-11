@@ -1,8 +1,10 @@
+using Ecombeta.Controls;
+using Ecombeta.iOS;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(Ecombeta.Controls.BorderlessEntry), typeof(Ecombeta.iOS.BorderlessEntryRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(BorderlessEntryRenderer))]
 
 namespace Ecombeta.iOS
 {
@@ -11,10 +13,7 @@ namespace Ecombeta.iOS
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
-            if (this.Control != null)
-            {
-                this.Control.BorderStyle = UITextBorderStyle.None;
-            }
+            if (Control != null) Control.BorderStyle = UITextBorderStyle.None;
         }
     }
 }

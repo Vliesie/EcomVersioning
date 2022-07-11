@@ -1,9 +1,11 @@
 using Android.Views;
+using Ecombeta.Controls;
+using Ecombeta.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Application = Android.App.Application;
 
-[assembly: ExportRenderer(typeof(Ecombeta.Controls.BorderlessEntry), typeof(Ecombeta.Droid.BorderlessEntryRenderer))]
+[assembly: ExportRenderer(typeof(BorderlessEntry), typeof(BorderlessEntryRenderer))]
 
 namespace Ecombeta.Droid
 {
@@ -17,9 +19,9 @@ namespace Ecombeta.Droid
         {
             base.OnElementChanged(e);
 
-            if (this.Control != null)
+            if (Control != null)
             {
-                this.Control.SetBackground(null);
+                Control.SetBackground(null);
                 Control.Gravity = GravityFlags.CenterVertical;
                 Control.SetPadding(0, 0, 0, 0);
             }

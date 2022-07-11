@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -10,15 +11,17 @@
         <StackLayout Opacity="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <Image x:Name="Backgroundimage" Aspect="AspectFill" Opacity="1" />
-                <Frame CornerRadius="20"   BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
-                    <StackLayout  HorizontalOptions="Center" VerticalOptions="Center" >
-                    <Image Aspect="AspectFit" Source="https://www.beautynwish.com/empty-cart.png" WidthRequest="300" HeightRequest="300" />
-                    <Button  BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" TextColor="White" x:Name= "Shopping" Text = "Go Shopping" 
-                    Clicked="Shopping_Clicked"
-                    VerticalOptions="End"
-                            Padding="10"
-                    HorizontalOptions = "Center"/>
-                </StackLayout>
+                <Frame CornerRadius="20" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
+                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Aspect="AspectFit" Source="https://www.beautynwish.com/empty-cart.png"
+                               WidthRequest="300" HeightRequest="300" />
+                        <Button BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" TextColor="White"
+                                x:Name="Shopping" Text="Go Shopping"
+                                Clicked="Shopping_Clicked"
+                                VerticalOptions="End"
+                                Padding="10"
+                                HorizontalOptions="Center" />
+                    </StackLayout>
                 </Frame>
             </Grid>
         </StackLayout>

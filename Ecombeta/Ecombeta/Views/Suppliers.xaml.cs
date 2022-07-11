@@ -1,58 +1,164 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-
+using Ecombeta.Models;
+using Microsoft.AppCenter.Crashes;
+using WooCommerceNET.WooCommerce.v3;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using WooCommerceNET.WooCommerce.v3;
-using WooCommerceNET.WooCommerce.v3.Extension;
-using WooCommerceNET;
-using System.Net;
-using System.Windows.Input;
-using Ecombeta.Models;
 
 namespace Ecombeta.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Suppliers : ContentPage
-    {   
-        public static string tagid { set; get; }
-        public ICommand PinButtonCommand { get; private set; }
-
-
-        public  Suppliers()
+    {
+        public Suppliers()
         {
-            
-            InitializeComponent();
- 
-            ImageBack.BackgroundImageSource = "https://mm-app.co.za/wp-content/uploads/2019/12/Bluepoly.jpg";
-            InitAsync();
-          
+            if (Users.LoggedIn == true)
+            {
+                try
+                {
+                    InitializeComponent();
+                    ImageBack.BackgroundImageSource = "https://mm-app.co.za/wp-content/uploads/2019/12/Bluepoly.jpg";
+
+                    InitAsync();
+                }
+                catch (Exception ex)
+                {
+                    Crashes.TrackError(ex);
+                }
+            }
+            else
+            {
+                NotLogged();
+            }
+
+        }
+        public async Task NotLogged()
+        {
+            var y = await DisplayAlert("Login to View this Page", "Please Login", "Login",
+                            "Home");
+            if (y)
+            {
+                var masterDetailPage = new Home { Detail = new NavigationPage(new Login()) };
+                Application.Current.MainPage = masterDetailPage;
+
+            }
+            else
+            {
+                var masterDetailPage = new Home { Detail = new NavigationPage(new MainPage()) };
+                Application.Current.MainPage = masterDetailPage;
+
+            }
         }
 
-        public List<Customer> a;
+        protected override async void OnAppearing()
+        {
+            try
+            {
+                App.MakeWebRequest();
+                if (App.IsConnected)
+                {
+                    //    WCObject wc = new WCObject(rest);
+                    //    //This runs
+                    //    Tags = await wc.Tag.GetAll(new Dictionary<string, string>() {
+                    //    { "per_page", "100" } });
+                    //    //This DOesnt
+                    //    productsListView.FlowItemsSource = Tags;
+                }
+                else
+                {
+                    await Navigation.PushAsync(new NoInternet());
+                }
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
+        }
+
+
         private async Task InitAsync()
         {
-            //There is about 98 Suppliers currentley its just a Image with a Button that passes a ID to use to get all Products under that Supplier Its basiclly just a Categorie 
-            RestAPI rest = new RestAPI("http://mm-app.co.za/wp-json/wc/v3/", "ck_a25f96835aabfc64b09613eb8ec4a8c9bcd5dcd0", "cs_8f247c22353f25b905c96171379b89714f8f4003");
-            WCObject wc = new WCObject(rest);
-           // var products = await wc.Tag.GetAll();
-            var p = await wc.Tag.GetAll(new Dictionary<string, string>() {
+            try
+            {
+                TaskLoader.IsRunning = true;
+                LoadingOverlay.IsVisible = true;
 
-                   { "per_page", "100" } });
-            productsListView.FlowItemsSource = p;
+                var wc = new WCObject(GlobalVariable.Init.rest);
+                //TODO only Fetch once
+               var networkPromise = SuppliersVariables.Init.Tags = await wc.Tag.GetAll(new Dictionary<string, string>
+                {
+                    {"per_page", "99"}
+                });
+
+
+
+            productsListView.FlowItemsSource =  SuppliersVariables.Init.Tags;
+
+                LoadingOverlay.IsVisible = false;
+                foreach (var x in SuppliersVariables.Init.Tags) {
+
+                    var y = x.description;
+                    Console.WriteLine(y);
+
+                }
+
+
+
+               
+
+
+                TaskLoader.IsRunning = false;
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
 
-        async void SupplierClicked(object sender, EventArgs args)
-        {  
-            var btn = (Button)sender;
-            var product = btn.BindingContext;
 
-            tagid = product.ToString();
-            await Navigation.PushAsync(new Products());
+        private async void SupplierClicked(object sender, EventArgs args)
+        {
+            try
+            {
+                var btn = (Button) sender;
+                var product = btn.BindingContext;
 
+                SuppliersVariables.Init.TagId = product.ToString();
+
+             
+                await Navigation.PushAsync(new Products());
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
         }
+
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (productsListView != null)
+            {
+                productsListView.BeginRefresh();
+
+
+                if (string.IsNullOrWhiteSpace(e.NewTextValue))
+                    productsListView.FlowItemsSource = SuppliersVariables.Init.Tags;
+                else
+                    productsListView.FlowItemsSource = SuppliersVariables.Init.Tags
+                        .Where(i => i.name.ToLower().Contains(e.NewTextValue)).ToList();
+
+
+                productsListView.EndRefresh();
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Something went wrong", "We're still loading the suppliers",
+                    "OK");
+            }
+        }
+
     }
 }

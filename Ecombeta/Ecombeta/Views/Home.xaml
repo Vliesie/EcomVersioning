@@ -1,68 +1,87 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Ecombeta.Views.Home"
-         xmlns:local="Ecombeta:XFMasterDetailPageNavigation"
-           xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-            Title="Mica Market">
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  x:Class="Ecombeta.Views.Home"
+                  BackgroundColor="Transparent"
+                  xmlns:local="Ecombeta:XFMasterDetailPageNavigation"
+                  xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms">
     <MasterDetailPage.Master>
-        <ContentPage Title="Menu" BackgroundColor="#0072BB">
+
+        <ContentPage Title="Menu" BackgroundColor="white">
+            <ContentPage.ToolbarItems> 
+            <ToolbarItem Icon="https://img.favpng.com/5/19/25/shopping-cart-icon-product-return-png-favpng-1ZJU3szBCWCr5YYXDXtgqG4ja.jpg" Text="Search" Clicked="Checkoutbtn_Clicked"/>
+        </ContentPage.ToolbarItems>
             <ContentPage.Resources>
                 <ResourceDictionary>
-                    <x:Int32 x:Key="SmallCornerRadius">4</x:Int32>
+                    <x:Int32 x:Key="SmallCornerRadius">114</x:Int32>
                     <x:Int32 x:Key="MediumCornerRadius">8</x:Int32>
                     <x:Int32 x:Key="LargeCornerRadius">16</x:Int32>
                 </ResourceDictionary>
             </ContentPage.Resources>
-            <Grid BackgroundColor="Transparent">
+            <Grid  BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="120" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid >
-                    <StackLayout Padding="0,10,0,0" HorizontalOptions="FillAndExpand" VerticalOptions="Fill">
-                        <Label HorizontalOptions="Center" FontAttributes="Bold" x:Name="Emailnav" FontSize="Large" FontFamily="droid sans mono" TextColor="White"></Label>
-                        <ffimageloading:CachedImage HorizontalOptions="Fill" VerticalOptions="Fill"
-                                            WidthRequest="120" HeightRequest="80"
-                                            DownsampleToViewSize="true"
-                                            Source = "https://www.mica.co.za/wp-content/themes/mica2016theme/images/logo.png">
-                        </ffimageloading:CachedImage>
-                    </StackLayout>
-                </Grid>
-                <StackLayout Margin="20,20,20,0" Grid.Row="1" Padding="10" Spacing="15">
-                    <ListView x:Name="navigationDrawerList" RowHeight="60"  SeparatorVisibility="Default" BackgroundColor="White" ItemSelected="OnMenuItemSelected">
+                <AbsoluteLayout x:Name="ViewLayout" VerticalOptions="FillAndExpand" >
+                    <Image Margin="0,0,0,0" Source="https://mm-app.co.za/wp-content/uploads/2020/02/CTICC.png" Opacity="0.9"  Aspect="Fill" AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All" />
+                     <AbsoluteLayout BackgroundColor="#66000000" AbsoluteLayout.LayoutBounds="1,1,1,1" AbsoluteLayout.LayoutFlags="All"  >
+                       <AbsoluteLayout  x:Name="ViewControls" Padding="10" AbsoluteLayout.LayoutBounds="1,1,1,0.6" AbsoluteLayout.LayoutFlags="All"  >
+                      
+                         <Label HorizontalOptions="Start" VerticalTextAlignment="Start"  FontAttributes="Bold" x:Name="userEmail" FontSize="Medium"
+                               FontFamily="droid sans mono"   TextColor="White" />
+                
+                         </AbsoluteLayout>
+                        <AbsoluteLayout x:Name="ViewControlz" Padding="10" AbsoluteLayout.LayoutBounds="1,1,1,0.40" AbsoluteLayout.LayoutFlags="All"  >
+                         
+                              <Label HorizontalOptions="Start"   VerticalTextAlignment="End"  FontAttributes="Bold" x:Name="Emailnav" FontSize="Large"
+                               FontFamily="droid sans mono"  Text="Mica Market" TextColor="White" />
+                 
+                      </AbsoluteLayout>
+                         </AbsoluteLayout>
+                </AbsoluteLayout>
+                
+                <StackLayout Grid.Row="1"  Spacing="0">
+                  
+                    <ListView  x:Name="navigationDrawerList" HasUnevenRows="True" RowHeight="60" SeparatorVisibility="Default"
+                            ItemSelected="OnMenuItemSelected"  BackgroundColor="White">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <ViewCell >
+                                <ViewCell>
                                     <!-- Main design for our menu items -->
-                                    <StackLayout  VerticalOptions="FillAndExpand" Margin="5" Orientation="Horizontal" Padding="20,10,0,10" Spacing="20">
+                                    <StackLayout VerticalOptions="FillAndExpand" Margin="5" Orientation="Horizontal"
+                                                 Padding="20,10,0,10" Spacing="20">
                                         <Image Source="{Binding Icon}"
-                                             WidthRequest="30"
-                                             HeightRequest="30"
-                                             VerticalOptions="Center" />
+                                               WidthRequest="30"
+                                               HeightRequest="30"
+                                               VerticalOptions="Center" />
 
                                         <Label Text="{Binding Title}"
-                                             FontSize="Medium"
-                                             VerticalOptions="Center"
-                                             TextColor="Black"/>
-                                        <Label x:Name="Emailnav" Text="" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                               FontSize="Small"
+
+                                              HorizontalOptions="StartAndExpand" VerticalOptions="Center"
+                                               TextColor="Black" />
+                                        <Label x:Name="None" TextColor="#F39000" FontSize="Medium" Margin="0,0,10,0" HorizontalOptions="End" VerticalOptions="Center"
+                                               Text=">"/>
+                                       
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button TextColor="White" Margin="0,0,0,10" CornerRadius="10"   FontSize="Small" FontAttributes="Bold" BackgroundColor="#F39000" x:Name="logoutbtn" Text="Logout" Clicked="logoutbtn_Clicked"/>
+                      
+                    <Button TextColor="White" Margin="0,10,0,10"  HorizontalOptions="Center" WidthRequest="250" VerticalOptions="Center" CornerRadius="10" FontSize="Small"
+                            FontAttributes="Bold" BackgroundColor="#F39000" x:Name="logoutbtn" Text="Sign Out"
+                            Clicked="logoutbtn_Clicked" />
+
                 </StackLayout>
+
             </Grid>
         </ContentPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
-        <NavigationPage>
-            
-        </NavigationPage>
+        <NavigationPage />
     </MasterDetailPage.Detail>
 </MasterDetailPage>
-    <!--Pages can be added as references or inline-->
-
-    
- 
+<!--Pages can be added as references or inline-->

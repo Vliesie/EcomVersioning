@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Ecombeta.Models
+﻿namespace Ecombeta.Models
 {
     public class Itemz
     {

@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -6,29 +7,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              mc:Ignorable="d"
-             Title="Home"
+             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
+             xmlns:local="clr-namespace:Ecombeta"
              x:Class="Ecombeta.Views.MainPage">
+    <NavigationPage.TitleView>
+       <Image HorizontalOptions="End" Aspect="AspectFit"  HeightRequest="20" WidthRequest="50" VerticalOptions="Center" Source="Cartcon.png">
+    <Image.GestureRecognizers>
+        <TapGestureRecognizer
+                Tapped="CartIcon_Clicked"
+                NumberOfTapsRequired="1" />
+  </Image.GestureRecognizers>
+       </Image>
+        
+
+    </NavigationPage.TitleView>
+      
     <ContentPage.Content>
-        <StackLayout Spacing="0">
-            <ffimageloading:CachedImage 
-                                           HorizontalOptions="FillAndExpand"
-                                        VerticalOptions="FillAndExpand"
-                                            Aspect="Fill"
-                x:Name="Zmain"
-                                            DownsampleToViewSize="true"
-                                            Source="https://www.mica.co.za/wp-content/uploads/2019/08/article-image.jpg">
-            </ffimageloading:CachedImage>
-            <o:VideoPlayer
-                x:Name="Player"
-	            AutoPlay="True"
-                FillMode="ResizeAspectFill"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="FillAndExpand"
-	            Source="https://mm-app.co.za/wp-content/uploads/2019/12/HomeDefault.mp4"
-                Playing="VideoPlayer_OnPlaying"
-                Paused="VideoPlayer_OnStopped"
-                Completed="VideoPlayer_OnCompleted"
-	            />          
-        </StackLayout>
+
+        <Grid BackgroundColor="Black">
+            <controls:CarouselViewControl x:Name="carousel"  Orientation="Horizontal" Position="0" InterPageSpacing="5" ShowIndicators="True">
+                <controls:CarouselViewControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <ffimageloading:CachedImage x:Name="background"  DownsampleToViewSize="True" Opacity="0.6" Source="{Binding imagesrc}" Aspect="AspectFill" />
+                            <StackLayout>
+                                <StackLayout VerticalOptions="CenterAndExpand">
+                                    <Label FontSize="50" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="{Binding Title}" FontFamily="Montserrat" />
+                                    <ffimageloading:CachedImage  Source="{Binding SubImage}" Aspect="AspectFill" />
+                                    <Label FontSize="14" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="{Binding SubTitle}" FontFamily="Raleway-Bold" />
+                                    <Label Margin="20,20,20,0" FontSize="14" TextColor="White" HorizontalTextAlignment="Center" FontAttributes="Bold" Text="{Binding content}"  FontFamily="Montserrat" />
+                                </StackLayout>
+                                <Label VerticalOptions="EndAndExpand" Margin="0,0,0,40" FontSize="12" HorizontalTextAlignment="Center" TextColor="#EEE" Text="{Binding footer}"  FontFamily="Montserrat" />
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </controls:CarouselViewControl.ItemTemplate>
+            </controls:CarouselViewControl>
+        </Grid>
+      
     </ContentPage.Content>
 </ContentPage>

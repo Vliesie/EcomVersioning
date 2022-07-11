@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+using System.Threading;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using Microsoft.AppCenter.Crashes;
 
 namespace Ecombeta.Droid
 {
@@ -17,13 +11,19 @@ namespace Ecombeta.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            try
+            {
+                Thread.Sleep(200);
+                base.OnCreate(savedInstanceState);
+                StartActivity(typeof(MainActivity));
+                Finish();
+            }
+            catch (Exception ex)
+            {
+                Crashes.TrackError(ex);
+            }
 
-            System.Threading.Thread.Sleep(300);
-            base.OnCreate(savedInstanceState);
-            StartActivity(typeof(MainActivity));
-            Finish();
-     
-           
+
             // Create your application here
         }
     }

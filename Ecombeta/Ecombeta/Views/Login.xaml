@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
@@ -8,33 +9,57 @@
              BackgroundImageSource="https://mm-app.co.za/wp-content/uploads/2019/12/OrangeBluepoly.jpg"
              x:Class="Ecombeta.Views.Login">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Grid>
-                
-                <StackLayout VerticalOptions="CenterAndExpand" Padding="15">
-                    <Label HorizontalOptions="Center" Text="Mica Market" FontSize="Title" FontAttributes="Bold" TextColor="White" ></Label>
+       <Grid >
+            <StackLayout
+                x:Name="LoadingOverlay"
+                IsVisible="False"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="Black" Opacity="0.5">
+                <ActivityIndicator
+                    x:Name="TaskLoader"
+                    IsRunning="False"
+                    Scale="3"
+                    HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    Color="White" />
+            </StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid>
+                    
+                    <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" Padding="15">
+                        <Label HorizontalOptions="Center" Text="Mica Market" FontSize="Title" FontAttributes="Bold"
+                               TextColor="White" />
 
-                    <Label HorizontalOptions="Center" Text="Use your credentials to log in" FontSize="Medium" TextColor="White" ></Label>
+                        <Label HorizontalOptions="Center" Text="Use your credentials to log in" FontSize="Medium"
+                               TextColor="White" />
 
-                    <Frame  Margin="10" CornerRadius="20" BorderColor="LightGray">
-                        <Entry  x:Name = "Usernamelabel"   BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Placeholder = "Username" Text="{Binding Uname}"
-                   HeightRequest = "40"
-                  />
-                    </Frame>
-                    <Frame Margin="10" CornerRadius="20" BorderColor="LightGray">
-                        <Entry x:Name = "Password"  BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center" Text="{Binding Password}" Placeholder = "Password"
-                   HeightRequest = "40"
-                   IsPassword = "True"/>
-                    </Frame>
+                        <Frame Margin="10" CornerRadius="20" HorizontalOptions="FillAndExpand"
+                               VerticalOptions="CenterAndExpand" BorderColor="LightGray">
+                            <Entry x:Name="Usernamelabel" WidthRequest="180" HorizontalTextAlignment="Center"
+                                   BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="Center" Placeholder="Username" Text="{Binding Uname}"
+                                   HeightRequest="40" />
+                        </Frame>
+                        <Frame Margin="10" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"
+                               CornerRadius="20" BorderColor="LightGray">
+                            <Entry x:Name="Password" WidthRequest="180" HorizontalTextAlignment="Center"
+                                   BackgroundColor="White" TextColor="Black" HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="Center" Text="{Binding Password}" Placeholder="Password"
+                                   HeightRequest="40"
+                                   IsPassword="True" />
+                        </Frame>
 
-                    <Button  BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" TextColor="White" x:Name= "loginbtn" Text = "Login " 
-                    Command="{Binding LoginCommand}"
-                    Clicked="loginbtn_Clicked"
-                    VerticalOptions="Center"
-                             Padding="15"
-                    HorizontalOptions = "Center"/>
-                </StackLayout>
-            </Grid>
-        </StackLayout>
+                        <Button BorderColor="#0088d3" BackgroundColor="#0088d3" CornerRadius="20" TextColor="White"
+                                Text="Login "
+                                x:Name="Loginbtn"
+                                Clicked="loginbtn_Clicked"
+                                VerticalOptions="Center"
+                                Padding="15"
+                                HorizontalOptions="Center" />
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

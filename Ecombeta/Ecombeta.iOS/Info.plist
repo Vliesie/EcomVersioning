@@ -6,16 +6,6 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>https://mm-app.co.za/</key>
-			<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-				<false/>
-			</dict>
-		</dict>
 	</dict>
 	<key>UIDeviceFamily</key>
 	<array>
@@ -46,22 +36,11 @@
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>Ecombeta</string>
+	<string>Mica Market</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.companyname.Ecombeta</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-	<key>CFBundleName</key>
-	<string>Ecombeta</string>
+	<string>com.LionmarketingEcombeta</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>external-accessory</string>
-		<string>fetch</string>
-		<string>remote-notification</string>
-		<string>processing</string>
-	</array>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
 	<key>UIApplicationSceneManifest</key>
@@ -73,5 +52,17 @@
 	<string>LaunchScreen</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+	<true/>
+	<key>CFBundleName</key>
+	<string>Mica Market</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>3.5</string>
+	<key>CFBundleVersion</key>
+	<string>3.5</string>
 </dict>
 </plist>
