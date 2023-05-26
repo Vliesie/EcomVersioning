@@ -9,9 +9,10 @@ namespace Ecombeta.Services
     {
         //This is my Own Pull for the WoocomAPI without the Wrapper I get Thread errors on the Desarialize Bit.
 
-        private static readonly string website_url = "https://azipit.co.za/mica-market-app";
-        private static readonly string consumer_key = "ck_0112f135e2f9b32cc147f28028fd621f919bc890";
-        private static readonly string consumer_secret = "cs_38ea21f4d63eb96a801868993b66065dcb0362fa";
+        //Sample Keys to test with 
+//         private static readonly string website_url = "https://azipit.co.za/mica-market-app";
+//         private static readonly string consumer_key = "ck_0112f135e2f9b32cc147f28028fd621f919bc890";
+//         private static readonly string consumer_secret = "cs_38ea21f4d63eb96a801868993b66065dcb0362fa";
 
         public static string GetAllProductsApiUrl =
             string.Format("{0}/wp-json/wc/v3/products?tag={1}&consumer_key={2}&consumer_secret={3}", website_url,
